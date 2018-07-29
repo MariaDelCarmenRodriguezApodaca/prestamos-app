@@ -1,0 +1,78 @@
+
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-dollar"></i>{{titulo}}</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+  <div class="col-lg-12">
+      <div class="row" *ngIf="cobros">
+          <div class="col-lg-12">
+              <section class="panel">
+              <header class="panel-heading">
+                  Lista de Cobros
+              </header>
+              <div class="table-responsive">
+              <table class="table">
+              <tbody>
+          
+                  <tr>
+          
+                      <th><i class="fa fa-credit-card"></i> Credito</th>
+                      <th><i class="fa fa-group"></i>  Cliente</th>
+                      <th><i class="fa fa-user"></i>  Empleado</th>
+                      <th><i class="fa fa-calendar"></i>  Fecha Cobro</th>
+                      <th><i class="fa fa-dollar"></i> Cantidad a Cobrar</th>
+                      <th><i class="fa fa-comment"></i> Comentario</th>   
+                      <th><i class="fa fa-check"></i> Status</th>                     
+  
+                  </tr>
+              
+              
+              <tr *ngFor="let cobro of cobros">
+                    
+                      <th><i class="fa fa-credit-card"></i>  {{cobro.idprestamo}}</th>
+                      <th><i class="fa fa-group"></i>  {{cobro.idcliente}}</th>
+                      <th><i class="fa fa-user"></i>   {{cobro.idempleado}}</th>
+                      <th><i class="fa fa-calendar"></i>   {{cobro.fecha_cobro}}</th>
+                      <th><i class="fa fa-dollar"></i>  {{cobro.cantidad_cobro}}</th>
+                      <th><i class="fa fa-comment"></i>  {{cobro.comentario_cobro}}</th>
+                      <th><i class=""></i> {{cobro.status}}</th>
+                     
+                      <!--<td>
+                          <div class="btn-group">
+                              <a class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="fotoNegocio(cobro.idcobro)"><i class="fa fa-pencil"></i></a>
+                          </div>
+                      </td>-->
+              </tr>
+              
+              </tbody>
+          </table>
+          </div>
+          </section>
+      </div> 
+  </div>
+   <!-- pagination -->
+      <div class="text-center" *ngIf="cobros">
+              <ul class="pagination">
+                  <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+                  <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+                  <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+              </ul>
+              <div class="text-center">
+                  <span class="badge bg-success">{{pag}}</span>
+              </div>
+          </div>
+          <!-- end pagination -->
+              <!-- mensaje cargando cobros -->
+              <div  *ngIf="!cobros">
+                  <span>Cargando Cobros...</span>
+              </div>
+              <!-- fin de mensaje -->
+      </div>  
+</div>            
+
+
+<!--main content end-->

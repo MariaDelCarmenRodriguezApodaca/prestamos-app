@@ -1,0 +1,53 @@
+
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-dollar"></i>{{titulo}}</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row" >
+  <div class="col-lg-8">
+          <form #prestamoForm="ngForm" (ngSubmit)="addPrestamo();limpiarForm(prestamoForm)" class="" id="prestamoForm">
+
+                  <label>
+                     Cliente: 
+                      <span class="label label-danger" *ngIf="!idCliente.valid && idCliente.touched">El nombre del cliente no es valido</span> 
+                  </label>
+                  <select type="text" #idCliente="ngModel" [(ngModel)]="nuevosprestamos.idcliente" (change)="seleccionarCliente($event.target.value)" class="form-control" name="idCliente" required>
+                      <option value="{{cliente.idcliente}}" *ngFor="let cliente of clientes">id: {{cliente.idcliente}}, nombre: {{cliente.nombres}} {{ cliente.app_pat }} {{cliente.app_mat}} </option>
+                  </select>
+      
+                  <label>
+                      Negocio Del Cliente: 
+                      <span class="label label-danger" *ngIf="!negocio.valid && negocio.touched">El nombre del negocio no es valido</span> 
+                  </label>
+                  <select type="text" #negocio="ngModel" [(ngModel)]="nuevosprestamos.idnegocio" class="form-control" name="negocio" required>
+                      <option value="{{negocio.idnegocio}}" *ngFor="let negocio of negocios">{{negocio.nombre_negocio}}</option>
+                  </select>
+      
+                  <label>
+                      Monto Solicitado: 
+                      <span class="label label-danger" *ngIf="!monto.valid && monto.touched">La descripción no es valida</span> 
+                  </label>
+                  <!-- <select type="text" #monto="ngModel" [(ngModel)]="nuevosprestamos.monto_solicitado" class="form-control" name="monto" required></select> -->
+                  <input type="text" #monto="ngModel" [(ngModel)]="nuevosprestamos.monto_solicitado" class="form-control" name="monto" required>
+                  <label>
+                      Tipo de Credito Solicitado: 
+                      <span class="label label-danger" *ngIf="!tipoCredito.valid && tipoCredito.touched">La descripción no es valida</span> 
+                  </label>
+                  <select type="text" #tipoCredito="ngModel" [(ngModel)]="nuevosprestamos.tipo_credito" class="form-control" name="tipoCredito" required>
+                      <option value="{{tipo.idcredito}}" *ngFor="let tipo of tipos">{{tipo.descripcion}}, {{tipo.tipo_credito}}</option>
+                  </select>
+          
+                  <br>
+              
+                      <!-- boton guardar -->
+                  <input  type="submit" value="Registrar" [disabled]="!prestamoForm.form.valid" class="btn btn-success" name="guardar" title="Registrar" >
+                  <button class="btn btn-primary" style="margin-left: 3px">Limpiar Formulario</button>
+          </form>
+  </div>
+</div>            
+
+
+<!--main content end-->

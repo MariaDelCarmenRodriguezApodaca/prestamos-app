@@ -1,0 +1,159 @@
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-credit-card"></i> Tipos de creditos</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+   <!-- Aqui va opcion para añadir otro -->
+  <div class="col-lg-12">
+      <a href="#modalNuevo" data-toggle="modal" class="btn btn-success"><i class="fa fa-plus">Añadir Nuevo</i></a>
+  </div>
+  <br>
+  <!-- Aqui acaba el boton-->
+  <div class="col-lg-12">
+      <div class="row" *ngIf="creditos">
+          <div class="col-lg-12">
+              <section class="panel">
+                  <header class="panel-heading">
+                      Lista de Tipos de Creditos
+                  </header>
+                  <div class="table-responsive">
+                      <table class="table">
+                          <tbody>
+                              <tr>
+                                  <th><i class="fa fa-credit-card"></i> Descripción</th>
+                                  <th><i class="fa fa-credit-card"></i> Tipo de Credito</th>
+                                  <th><i class="fa fa-clock-o"></i> Tiempo</th>
+                                  <th><i class="fa fa-sort-numeric-asc"></i> Interes</th>
+                                  <th><i class="fa fa-check"></i> Status</th>
+                                 
+                              </tr>
+                              <tr *ngFor="let credito of creditos">                                        
+                                  <td><i class="fa fa-credit-card"></i> {{credito.descripcion}}</td>
+                                  <td><i class="fa fa-credit-card"></i> {{credito.tipo_credito}}</td>
+                                  <td><i class="fa fa-clock-o"></i> {{credito.tiempo}}</td>
+                                  <td><i class="fa fa-sort-numeric-asc"></i> {{credito.interes_credito}}%</td>
+                                  <td><i class=""></i> {{credito.estado}}</td>
+                                  
+                                  <td>
+                                      <a class="btn btn-info" data-toggle="modal" data-target="#myModal" (click)="mostrarCreditos(credito)"><i class="fa fa-pencil"></i></a>
+
+                                  </td>
+                              </tr>                                
+                          </tbody>
+                      </table>
+                  </div>
+              </section>
+          </div> 
+      </div>
+
+      <!--/////////////////////////////////////////////////////////////////////////////////////////////////-->
+      <!-- pagination -->
+      <div class="text-center" *ngIf="creditos">
+          <ul class="pagination">
+              <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+              <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+              <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+          </ul>
+          <div class="text-center">
+              <span class="badge bg-success">{{pag}}</span>
+          </div>
+      </div>
+      <!-- end pagination -->
+          <!-- mensaje cargando giros -->
+          <div  *ngIf="!creditos">
+              <span>Cargando Tipos de Creditos...</span>
+          </div>
+          <!-- fin de mensaje -->
+  </div>  
+</div>   
+
+      <!--/////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!--modal añadir-->
+
+<!-- Inicio del modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                  <h4 class="modal-title">Editar Tipo de Crédito</h4>
+              </div>
+              <div class="modal-body">
+  <!-- Inicio del formulario -->
+                  <form #tipoCreditoForm="ngForm"  (ngSubmit)="guardarCambios();limpiarForm(tipoCreditoForm)" role="form">
+                      <div class="form-group">
+                          <label for="descipcion">Descrpcion del Credito:</label>
+                          <span class="label label-danger" *ngIf="!descipcion.valid && descipcion.touched">La descipcion no es valida</span>
+                          <input type="text" #descipcion="ngModel" [(ngModel)]="editarCreditos.descripcion" name="descripcion" id="descipcion" class="form-control"  placeholder="Ejemplo: Credito de 20 días" required>
+                          
+                          <label for="descipcion">Tipo de Credito:</label>
+                          <span class="label label-danger" *ngIf="!tipoCredito.valid && tipoCredito.touched">El tipo de credito no es valido</span>
+                          <!-- <input type="text" #tipoCredito="ngModel" [(ngModel)]="editarCreditos.tipo_credito" name="tipoCredito" id="descipcion" class="form-control" placeholder="Ejemplo: Pagos Semanales" required> -->
+                          <select #tipoCredito="ngModel" [(ngModel)]="editarCreditos.tipo_credito" name="tipoCredito" id="descipcion" class="form-control" placeholder="Ejemplo: Pagos Semanales" required>
+                              <option value="Pagos Diarios">Pagos Diarios</option>
+                              <option value="Pagos Semanales">Pagos Semanales</option>
+                              <option value="Pagos Mensuales">Pagos Mensuales</option>
+                          </select>
+                          <label for="descipcion">Tiempo de Credito:</label>
+                          <span class="label label-danger" *ngIf="!tiempoCredito.valid && tiempoCredito.touched">El tiempo ingresado no es valido</span>
+                          <input type="text" #tiempoCredito="ngModel" [(ngModel)]="editarCreditos.tiempo" name="tiempoCredito" id="descipcion" class="form-control"  placeholder="Ejemplo:20" required>
+                          
+                          <label for="descipcion">Interes del Credito:</label>
+                          <span class="label label-danger" *ngIf="!interesCredito.valid && interesCredito.touched">El interes añadido no es valido</span>
+                          <input type="text" #interesCredito="ngModel" [(ngModel)]="editarCreditos.interes_credito" name="interesCredito" id="descipcion" class="form-control"  placeholder="Ejemplo:10" required>
+                          
+                  
+                      </div>
+                      <input type="submit" class="btn btn-success" value="Guardar" [disabled]="!tipoCreditoForm.form.valid" title="Complete el formulario para guadar el nuevo tipo de credito">
+                      <button class="btn btn-success" (click)="limpiarForm(tipoCreditoForm)">Limpiar</button>
+                  </form>
+  <!-- Fin del formulario -->
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Fin del modal -->
+  <!-- Inicio del modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modalNuevo" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                  <h4 class="modal-title">Nuevo Tipo de Credito</h4>
+              </div>
+              <div class="modal-body">
+  <!-- Inicio del formulario -->
+                  <form #adForm="ngForm"  (ngSubmit)="guardarCredito();limpiarForm(adForm)" role="form">
+                          <div class="form-group">
+                                  <label for="descipcion">Descrpcion del Credito:</label>
+                                  <span class="label label-danger" *ngIf="!descipcion.valid && descipcion.touched">La descipcion no es valida</span>
+                                  <input type="text" #descipcion="ngModel" [(ngModel)]="editarCreditos.descripcion" name="descripcion" id="descipcion" class="form-control"  placeholder="Ejemplo: Credito de 20 días" required>
+                                  
+                                  <label for="descipcion">Tipo de Credito:</label>
+                                  <span class="label label-danger" *ngIf="!tipoCredito.valid && tipoCredito.touched">El tipo de credito no es valido</span>
+                                  <!-- <input type="text" #tipoCredito="ngModel" [(ngModel)]="editarCreditos.tipo_credito" name="tipoCredito" id="descipcion" class="form-control" placeholder="Ejemplo: Pagos Semanales" required> -->
+                                  <select #tipoCredito="ngModel" [(ngModel)]="editarCreditos.tipo_credito" name="tipoCredito" id="descipcion" class="form-control" placeholder="Ejemplo: Pagos Semanales" required>
+                                      <option value="Pagos Diarios">Pagos Diarios</option>
+                                      <option value="Pagos Semanales">Pagos Semanales</option>
+                                      <option value="Pagos Mensuales">Pagos Mensuales</option>
+                                  </select>
+                                  <label for="descipcion">Tiempo de Credito:</label>
+                                  <span class="label label-danger" *ngIf="!tiempoCredito.valid && tiempoCredito.touched">El tiempo ingresado no es valido</span>
+                                  <input type="text" #tiempoCredito="ngModel" [(ngModel)]="editarCreditos.tiempo" name="tiempoCredito" id="descipcion" class="form-control"  placeholder="Ejemplo:20" required>
+                                  
+                                  <label for="descipcion">Interes del Credito:</label>
+                                  <span class="label label-danger" *ngIf="!interesCredito.valid && interesCredito.touched">El interes añadido no es valido</span>
+                                  <input type="text" #interesCredito="ngModel" [(ngModel)]="editarCreditos.interes_credito" name="interesCredito" id="descipcion" class="form-control"  placeholder="Ejemplo:10" required>                                    
+                          
+                              </div>
+                      <input type="submit" class="btn btn-success" value="Guardar" [disabled]="!adForm.form.valid" title="Complete el formulario para guadar el nuevo tipo">
+                      <button class="btn btn-success" (click)="limpiarForm(adForm)">Limpiar</button>
+                  </form>
+  <!-- Fin del formulario -->
+              </div>
+          </div>
+      </div>
+  </div>

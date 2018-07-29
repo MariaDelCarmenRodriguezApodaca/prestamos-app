@@ -1,0 +1,207 @@
+
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-building-o"></i>{{titulo}}</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+  <div class="col-lg-12">
+      <div class="row" *ngIf="sucursales">
+          <div class="col-lg-12">
+              <section class="panel">
+                  <header class="panel-heading">
+                      Lista de Sucursales
+                  </header>
+                  <div class="table-responsive">
+                      <table class="table">
+                          <tbody>
+                              <tr>
+                                  <th><i class="fa fa-user"></i>Nombre</th>
+                                  <th><i class="fa fa-home"></i> Calle y num.</th>
+                                  <th><i class=""></i> Colonia</th>
+                                  <th><i class=""></i> Estado</th>
+                                  <th><i class=""></i> Municipio</th>
+                                  <th><i class=""></i> Poblacion</th>
+                                  <th><i class="fa fa-check"></i> Status </th>
+                                  <th><i class="fa fa-clock-o"></i> Horario</th>
+                                  <th><i class="fa fa-user"></i> Encargado</th>
+                                  <th><i class="fa fa-mobile"></i> Telefono</th>
+                                  <!-- <th><i class="fa fa-building"></i> IdEmpresa</th> -->
+                                  <th><i class="fa fa-pencil"></i>Editar</th>
+                              </tr>
+                              <tr *ngFor="let sucursal of sucursales">                                        
+                                  <td><i class="fa fa-user"></i> {{sucursal.nombre}}</td>
+                                  <td><i class="fa fa-home"></i> {{sucursal.callenum}}</td>
+                                  <td><i class=""></i> {{sucursal.colonia}}</td>
+                                  <td><i class=""></i> {{sucursal.estado}}</td>
+                                  <td><i class=""></i> {{sucursal.municipio}}</td>
+                                  <td><i class=""></i> {{sucursal.poblacion}}</td>
+                                  <td><i class="fa fa-check"></i> {{sucursal.status}}</td>
+                                  <td><i class=""></i> {{sucursal.hora_inicio}} - {{sucursal.hora_fin}}</td>
+                                  <td><i class="fa fa-user"></i> {{sucursal.encargado}}</td>
+                                  <td><i class="fa fa-mobile"></i> {{sucursal.telefono}}</td>
+                                  <!-- <td><i class="fa fa-building"></i> {{sucursal.id_empresa}}</td> -->
+                                  <td>
+                                      <a class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="mostrarSucursal(sucursal)"><i class="fa fa-pencil"></i></a>
+                                  </td>
+                              </tr>                                
+                          </tbody>
+                      </table>
+                  </div>
+              </section>
+          </div> 
+      </div>
+      <!-- pagination -->
+      <div class="text-center" *ngIf="sucursales">
+          <ul class="pagination">
+              <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+              <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+              <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+          </ul>
+          <div class="text-center">
+              <span class="badge bg-success">{{pag}}</span>
+          </div>
+      </div>
+      <!-- end pagination -->
+          <!-- mensaje cargando giros -->
+          <div  *ngIf="!sucursales">
+              <span>Cargando sucursales...</span>
+          </div>
+          <!-- fin de mensaje -->
+  </div>  
+</div>   
+<!--main content end-->
+
+
+<!-- inicio del modal para editar sucursal -->
+<!-- Inicio del modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                  <h4 class="modal-title">Editar sucursal</h4>
+              </div>
+              <div class="modal-body">
+  <!-- Inicio del formulario -->
+                  <form #sucursalForm="ngForm"  (ngSubmit)="guardarCambios();limpiarForm(sucursalForm)" role="form">
+                      <label>
+                          Nombre: 
+                          <span class="label label-danger" *ngIf="!nombre.valid && nombre.touched">El nombre no es valido</span> 
+                      </label>
+                      <input type="text" #nombre="ngModel" [(ngModel)]="editarSucursal.nombre" class="form-control" name="nombre" required>
+          
+                      <label>
+                          Calle y numero: 
+                          <span class="label label-danger" *ngIf="!callenum.valid && callenum.touched">Calle y numero no es valido</span> 
+                      </label>
+                      <input type="text" #callenum="ngModel" [(ngModel)]="editarSucursal.callenum" class="form-control" name="callenum" required>
+          
+                      <label>
+                          Colonia: 
+                          <span class="label label-danger" *ngIf="!colonia.valid && colonia.touched">La colonia no es valida</span> 
+                      </label>
+                      <input type="text" #colonia="ngModel" [(ngModel)]="editarSucursal.colonia" class="form-control" name="colonia" required>
+          
+                      <label>
+                          Población: 
+                          <span class="label label-danger" *ngIf="!poblacion.valid && poblacion.touched">La población no es válida</span> 
+                      </label>
+                      <input type="text" #poblacion="ngModel" [(ngModel)]="editarSucursal.poblacion" class="form-control" name="poblacion" required>
+          
+                      <label>
+                          Municipio: 
+                          <span class="label label-danger" *ngIf="!municipio.valid && municipio.touched">El Municipio no es valido</span> 
+                      </label>
+                      <input type="text" #municipio="ngModel" [(ngModel)]="editarSucursal.municipio" class="form-control" name="municipio" required>
+          
+                      <label>
+                          Estado:
+                          <span class="label label-danger" *ngIf="!estados.valid && estados.touched">El estado no es valido</span> 
+                      </label>
+                      <select name="estados" #estados="ngModel" [(ngModel)]="editarSucursal.estado" class="form-control m-bot15 ">
+                          <option value="Aguascalientes">Aguascalientes</option>
+                          <option value="Baja California">Baja California</option>
+                          <option value="Baja California Sur">Baja California Sur</option>
+                          <option value="Campeche">Campeche</option>
+                          <option value="Coahuila de Zaragoza">Coahuila de Zaragoza</option>
+                          <option value="Colima">Colima</option>
+                          <option value="Chiapas">Chiapas</option>
+                          <option value="Chihuahua">Chihuahua</option>
+                          <option value="Distrito Federal">Distrito Federal</option>
+                          <option value="Durango">Durango</option>
+                          <option value="Guanajuato">Guanajuato</option>
+                          <option value="Guerrero">Guerrero</option>
+                          <option value="Hidalgo">Hidalgo</option>
+                          <option value="Jalisco">Jalisco</option>
+                          <option value="México">México</option>
+                          <option value="Michoacán de Ocampo">Michoacán de Ocampo</option>
+                          <option value="Morelos">Morelos</option>
+                          <option value="Nayarit">Nayarit</option>
+                          <option value="Nuevo León">Nuevo León</option>       
+                          <option value="Oaxaca">Oaxaca</option>
+                          <option value="Puebla">Puebla</option>
+                          <option value="Querétaro">Querétaro</option>
+                          <option value="Quintana Roo">Quintana Roo</option>
+                          <option value="San Luis Potosí">San Luis Potosí</option>
+                          <option value="Sinaloa">Sinaloa</option>
+                          <option value="Sonora">Sonora</option>
+                          <option value="Tabasco">Tabasco</option>
+                          <option value="Tamaulipas">Tamaulipas</option>
+                          <option value="Tlaxcala">Tlaxcala</option>
+                          <option value="Veracruz de Ignacio de la Llave">Veracruz de Ignacio de la Llave</option>
+                          <option value="Yucatán">Yucatán</option>
+                          <option value="Zacatecas">Zacatecas</option>
+                      </select>
+          
+                      <label>
+                          Hora de Inicio: 
+                          <span class="label label-danger" *ngIf="!horaInicio.valid && horaInicio.touched">La Hora no es valida</span> 
+                      </label>
+                      <input type="text" #horaInicio="ngModel" [(ngModel)]="editarSucursal.hora_inicio" class="form-control" name="horaInicio" required>
+          
+                      <label>
+                          Hora de Fin: 
+                          <span class="label label-danger" *ngIf="!horaFin.valid && horaFin.touched">La Hora no es valida</span> 
+                      </label>
+                      <input type="text" #horaFin="ngModel" [(ngModel)]="editarSucursal.hora_fin" class="form-control" name="horaFin" required>
+          
+                      <label>
+                          Nombre del Encargado: 
+                          <span class="label label-danger" *ngIf="!encargado.valid && encargado.touched">El nombre no es valido</span> 
+                      </label>
+                      <input type="text" #encargado="ngModel" [(ngModel)]="editarSucursal.encargado" class="form-control" name="encargado" required>
+          
+                      <label>
+                          Telefono de la Sucursal: 
+                          <span class="label label-danger" *ngIf="!telefono.valid && telefono.touched">El telefono no es valido</span> 
+                      </label>
+                      <input type="text" #telefono="ngModel" [(ngModel)]="editarSucursal.telefono" class="form-control" name="telefono" required>
+          
+                      <!-- <label>
+                          Id Empresa: 
+                          <span class="label label-danger" *ngIf="!IdEmpresa.valid && IdEmpresa.touched">El Id no es valido</span> 
+                      </label>
+                      <input type="text" #IdEmpresa="ngModel" [(ngModel)]="editarSucursal.id_empresa" class="form-control" name="IdEmpresa" required>
+           -->
+                      <br>
+                      <label>
+                          Status:
+                          <span class="label label-danger" *ngIf="!status.valid && status.touched">El status no es valido</span> 
+                      </label>
+                      <select name="status" #status="ngModel" [(ngModel)]="editarSucursal.status" class="form-control m-bot15 " required>
+                              <option value="1">Alta</option>
+                              <option value="0">Baja</option>
+                      </select>
+                          <!-- boton guardar -->
+                      <input  type="submit" value="Guardar cambios" [disabled]="!sucursalForm.form.valid" class="btn btn-success" name="guardar" title="guardar cambios" >
+                      <button class="btn btn-primary" style="margin-left: 3px" (click)="limpiarForm(sucursalForm)">Limpiar Formulario</button>
+                  </form>
+  <!-- Fin del formulario -->
+              </div>
+          </div>
+      </div>
+  </div>
+<!-- Fin del modal para editar sucursar -->

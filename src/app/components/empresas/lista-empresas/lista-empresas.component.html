@@ -1,0 +1,65 @@
+
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-building"></i>{{titulo}}</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+      <div class="col-lg-12">
+              <div class="row" *ngIf="empresas">
+                      <div class="col-lg-12">
+                          <section class="panel">
+                          <header class="panel-heading">
+                              Lista de empresas
+                          </header>
+                          <div class="table-responsive">
+                          <table class="table">
+                          <tbody>
+                          <tr>
+                              <th><i class="fa fa-building"></i>  Razón social</th>
+                              <th><i class="fa fa-home"></i>  Dirección</th>
+                              <th><i class="fa fa-info"></i>  Descripción</th>
+                              <!-- <th><i class="fa fa-pencil"></i>  Editar</th> -->
+                          </tr>
+                          <tr *ngFor="let empresa of empresas">
+                                  <td><i class="fa fa-building"></i>  {{empresa.razon_social}}</td>
+                                  <td><i class="fa fa-home"></i>  {{empresa.direccion}}</td>
+                                  <td><i class="fa fa-info"></i>  {{empresa.descripcion}}</td>
+                                  <!-- <td>
+                                      <div class="btn-group">
+                                          <a class="btn btn-primary" data-toggle="modal" data-target="#myModal" ><i class="fa fa-pencil"></i></a>
+                                      </div>
+                                  </td> -->
+                          </tr>
+                          
+                          </tbody>
+                      </table>
+                      </div>
+                      </section>
+                  </div> 
+              </div>
+               <!-- pagination -->
+              <div class="text-center" *ngIf="empresas">
+                  <ul class="pagination">
+                      <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+                      <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+                      <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+                  </ul>
+                  <div class="text-center">
+                      <span class="badge bg-success">{{pag}}</span>
+                  </div>
+              </div>
+              <!-- end pagination -->
+                  <!-- mensaje cargando giros -->
+                  <div  *ngIf="!empresas">
+                      <span>Cargando Empresas...</span>
+                  </div>
+                  <!-- fin de mensaje -->
+          </div>  
+
+</div>            
+
+
+<!--main content end-->

@@ -1,0 +1,57 @@
+<!-- Login -->
+<div class="login-img2-body ml-5"
+  style="background: url('../assets/img/fondo.jpg');
+  float: inherit;
+  z-index: 100;
+  background-size: cover;
+  background-repeat: no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  ">
+    <div class="conjunto col-lg-12 " align="center">
+        <div class="container col-lg-12">    
+          <div class="row col-lg-6">
+              <div class="side-imagen" style="margin-top: 30%; ">
+                  <img class="logo-imagen" src="../assets/img/logo.png" alt="">
+              </div>
+          </div>
+          <div class="row col-lg-6">
+              <form class="login-form" #loginForm="ngForm" (ngSubmit)="ingresar(loginForm)" >
+                  <div class="login-wrap">
+                      <p class="login-img"><i class="icon_lock_alt"></i></p>
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="icon_profile"></i></span>
+                        <input 
+                          type="text" 
+                          class="form-control" 
+                          name="usuario"
+                          #user="ngModel" 
+                          [(ngModel)]="usuario"
+                          placeholder="Usuario"  
+                          autofocus
+                          required
+                        >
+                      </div>
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="icon_key_alt"></i></span>
+                        <input 
+                          type="password" 
+                          class="form-control" 
+                          name="password"
+                          #pass="ngModel" 
+                          [(ngModel)]="password"
+                          placeholder="Contraseña"
+                          required
+                        >
+                      </div>
+                      <button class="btn btn-primary btn-lg btn-block" type="submit">Ingresar</button>
+                     <!-- <button class="btn btn-info btn-lg btn-block" type="submit">Registrarme</button>-->
+                  </div>
+              </form>
+          </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br>
+</div>
+

@@ -1,0 +1,267 @@
+<!-- titulo -->
+<div class="row">
+    <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-thumbs-o-up"></i>Encuestas pendientes</h3>
+    </div>
+  </div>
+  <!-- Contenido  -->
+  <div class="row">
+      
+      <br>
+      <!-- Aqui va la tabla -->
+      <div class="col-lg-12">
+          <div class="row" *ngIf="encuestas_detalles_simples">
+              <div class="col-lg-12">
+                    <section class="panel">
+                      <header class="panel-heading">
+                          Lista de encustas pendientes
+                      </header>
+                      <div class="table-responsive">
+                          <table class="table">
+                              <tbody>
+                                  <tr>
+                                        <th> id encuesta</th>
+                                        <th> Fecha</th>
+                                        <th> id cliente</th>
+                                        <th> Nombre cliente</th>
+                                        <th> tel cliente</th>
+                                        <th> id negocio</th>
+                                        <th> negocio</th>
+                                        <th> Realizar</th>
+                                  </tr>
+                                  <tr *ngFor="let encuesta of encuestas_detalles_simples">
+                                        <td>{{encuesta.encuesta_idencuesta}}</td>
+                                        <td>{{encuesta.encuesta_fecha}}</td>
+                                        <td>{{encuesta.encuesta_idcliente}}</td>
+                                        <td>{{encuesta.cliente_nombre + ' ' + encuesta.cliente_app_pat }}</td>
+                                        <td>{{encuesta.cliente_telefono}}</td>
+                                        <td>{{encuesta.negocio_idnegocio}}</td>
+                                        <td>{{encuesta.negocio_nombre_negocio}}</td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="verDatos(encuesta.encuesta_idencuesta)"><i class="fa fa-list"></i></a>
+                                        </div>
+                                  <tr>
+                                  </tr>
+                            </tbody>
+                          </table>
+                      </div>
+                    </section>
+              </div>
+          </div>
+      </div>
+      <!-- Aqui termina la tabla -->
+      <!-- pagination -->
+      <div class="text-center" *ngIf="encuestas_pendientes">
+          <ul class="pagination">
+            <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+            <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+            <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+          </ul>
+          <div class="text-center">
+              <span class="badge bg-success">{{pag}}</span>
+          </div>
+      </div>
+      <!-- end pagination -->
+      <!-- mensaje cargando giros -->
+      <div  *ngIf="!encuestas_detalles_simples">
+          <span>Cargando Encuestas...</span>
+      </div>
+      <!-- fin de mensaje -->
+  </div>            
+  
+  
+  
+  <!-- Inicio del modal -->
+  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">Encuesta</h4>
+            </div>
+            <div class="modal-body">
+                  <!-- formulario encuesta -->
+                  <form #encuestaForm="ngForm" (ngSubmit)="updateEncuesta();limpiarForm(encuestaForm)" class="" id="encuestaForm">
+                      <div class="text-left"></div>
+                          <h3>Datos de la ruta</h3>
+                          <label>
+                              Representante: 
+                              <span class="label label-danger" *ngIf="!representante.valid && representante.touched">El Representante no es valido</span> 
+                          </label>
+                          <input type="text" #representante="ngModel" [(ngModel)]="encuestaSeleccionada.representante" class="form-control" name="representante" required>
+                  
+                          <label>
+                              Nombre de la Ruta: 
+                              <span class="label label-danger" *ngIf="!nombreRuta.valid && nombreRuta.touched">La ruta no es valido</span> 
+                          </label>
+                          <input type="text" #nombreRuta="ngModel" [(ngModel)]="encuestaSeleccionada.nombre_ruta"  class="form-control" name="nombreRuta" required>
+                      
+                  
+                          <h3>Datos del Cliente</h3>
+                          <label>
+                              Nombre del Cliente:
+                              <span class="label label-danger" *ngIf="!nombreCliente.valid && nombreCliente.touched">El nombre no es valido</span> 
+                          </label>
+                          <input type="text" #nombreCliente="ngModel" [(ngModel)]="encuestaSeleccionada.nombre_cliente"   class="form-control" name="nombreCliente" required>
+                          
+                          <label>
+                              Fecha de Nacimiento:
+                              <span class="label label-danger" *ngIf="!fechaNacimiento.valid && fechaNacimiento.touched">La fecha no es valido</span> 
+                          </label>                              
+                          <input type="text"  #fechaNacimiento="ngModel" [(ngModel)]="encuestaSeleccionada.fecha_nacimiento"  class="form-control" name="fechaNacimiento" placeholder="YYYY/MM/DD" required>
+                  
+                          <br>
+                          <label>
+                              Edad:
+                              <span class="label label-danger" *ngIf="!edad.valid && edad.touched">La edad no es valido</span> 
+                          </label>
+                          <input type="number" #edad="ngModel" [(ngModel)]="encuestaSeleccionada.edad" class="form-control" name="edad" required>
+                  
+                          <label>
+                              Comprobante que envió:
+                              <span class="label label-danger" *ngIf="!comprobanteEnvia.valid && comprobanteEnvia.touched">El compobante no es valido</span> 
+                          </label>
+                          <input type="text" #comprobanteEnvia="ngModel" [(ngModel)]="encuestaSeleccionada.comprobante_envia"  class="form-control" name="comprobanteEnvia" required>
+                      
+                          <label>
+                              Domicilio:
+                              <span class="label label-danger" *ngIf="!domicilio.valid && domicilio.touched">El domicilio no es valido</span> 
+                          </label>
+                              <input type="text" #domicilio="ngModel" [(ngModel)]="encuestaSeleccionada.domicilio"  class="form-control" name="domicilio" required>
+                  
+                          <label>
+                              Domicilio Propio o Rentado:
+                              <span class="label label-danger" *ngIf="!domicilioPropioRentado.valid && domicilioPropioRentado.touched">El domicilio no es valido</span>
+                          </label>
+                              <input type="text"  #domicilioPropioRentado="ngModel" [(ngModel)]="encuestaSeleccionada.domicilio_propio_rentado" class="form-control" name="domicilioPropioRentado" required>
+
+                          <label>
+                              Dependientes Económicos:
+                              <span class="label label-danger" *ngIf="!dependientesEconomicos.valid && dependientesEconomicos.touched">El dato no es valido</span>
+                            </label>
+                                <input type="text"  #dependientesEconomicos="ngModel" [(ngModel)]="encuestaSeleccionada.dependientes_economicos" class="form-control" name="dependientesEconomicos" required>
+  
+                  
+                          <label>
+                              Teléfono del Cliente:
+                              <span class="label label-danger" *ngIf="!telefonoCliente.valid && telefonoCliente.touched">El telefono no es valido</span>
+                            </label>
+                                <input type="text"  #telefonoCliente="ngModel" [(ngModel)]="encuestaSeleccionada.telefono" class="form-control" name="telefonoCliente" required>
+  
+                          <label>
+                              Monto Solicitado:
+                              <span class="label label-danger" *ngIf="!montoSolicitado.valid && montoSolicitado.touched">El monto no es valido</span>
+                            </label>
+                                <input type="text"  #montoSolicitado="ngModel" [(ngModel)]="encuestaSeleccionada.monto_solicitado" class="form-control" name="montoSolicitado" required>
+  
+                          <label>
+                              Monto Autorizado:
+                              <span class="label label-danger" *ngIf="!montoAutorizado.valid && montoAutorizado.touched">El monto no es valido</span>
+                            </label>
+                                <input type="text"  #montoAutorizado="ngModel" [(ngModel)]="encuestaSeleccionada.monto_autorizado" class="form-control" name="montoAutorizado" required>
+  
+                          <hr>
+                  
+                          <h3>Información del Negocio</h3>
+                          <label>
+                              Giro del Negocio: 
+                              <span class="label label-danger" *ngIf="!giroNegocio.valid && giroNegocio.touched">El giro no es valido</span>
+                            </label>
+                                <input type="text"  #giroNegocio="ngModel" [(ngModel)]="encuestaSeleccionada.giro_negocio" class="form-control" name="giroNegocio" required>
+  
+                          <label>
+                              Ingresos Semanales: 
+                              <span class="label label-danger" *ngIf="!ingresosSemanales.valid && ingresosSemanales.touched">El ingreso no es valido</span>
+                            </label>
+                                <input type="text"  #ingresosSemanales="ngModel" [(ngModel)]="encuestaSeleccionada.ingresos_semanales" class="form-control" name="ingresosSemanales" required>
+  
+                                
+                          <label>
+                              Propietario o Empleado: 
+                              <span class="label label-danger" *ngIf="!propietario.valid && propietario.touched">El dato no es valido</span>
+                            </label>
+                                <input type="text"  #propietario="ngModel" [(ngModel)]="encuestaSeleccionada.propietario_o_empleado" class="form-control" name="propietario" required>
+  
+                          <label>
+                              Antiguedad del Negocio: 
+                              <span class="label label-danger" *ngIf="!antiguedad.valid && antiguedad.touched">El dato no es valido</span>
+                            </label>
+                                <input type="text"  #antiguedad="ngModel" [(ngModel)]="encuestaSeleccionada.antiguedad_negocio" class="form-control" name="antiguedad" required>
+  
+                          <label>
+                              Contrato de arrendamiento del Negocio: 
+                              <span class="label label-danger" *ngIf="!contratoArrendamiento.valid && contratoArrendamiento.touched">El dato no es valido</span>
+                            </label>
+                                <input type="text"  #contratoArrendamiento="ngModel" [(ngModel)]="encuestaSeleccionada.contrato_arrendamiento" class="form-control" name="contratoArrendamiento" required>
+  
+                          <label>
+                              Ubicación del Negocio: 
+                              <span class="label label-danger" *ngIf="!ubicacionNegocio.valid && ubicacionNegocio.touched">La ubicacion no es valida</span>
+                            </label>
+                                <input type="text"  #ubicacionNegocio="ngModel" [(ngModel)]="encuestaSeleccionada.ubicacion" class="form-control" name="ubicacionNegocio" required>
+  
+                          <label>
+                              Horario Laboral: 
+                              <span class="label label-danger" *ngIf="!horarioLaboral.valid && horarioLaboral.touched">El Horario no es valido</span>
+                            </label>
+                                <input type="text"  #horarioLaboral="ngModel" [(ngModel)]="encuestaSeleccionada.hora_laboran" class="form-control" name="horarioLaboral" required>
+  
+                          <hr> 
+                          <h3>Aval</h3>
+                  
+                          <label>
+                              Nombre del Aval:
+                              <span class="label label-danger" *ngIf="!nombreAval.valid && nombreAval.touched">El Nombre no es valido</span>
+                            </label>
+                                <input type="text"  #nombreAval="ngModel" [(ngModel)]="encuestaSeleccionada.nombre_aval" class="form-control" name="nombreAval" required>
+  
+                            <label>
+                                Antiguedad de Conocerlo: 
+                                <span class="label label-danger" *ngIf="!antiguedadConocerlo.valid && antiguedadConocerlo.touched">El dato no es valido</span>
+                            </label>
+                                <input type="text"  #antiguedadConocerlo="ngModel" [(ngModel)]="encuestaSeleccionada.antiguedad_conocerse" class="form-control" name="antiguedadConocerlo" required>
+  
+                            <label>
+                                Teléfono: 
+                                <span class="label label-danger" *ngIf="!telefonoAval.valid && telefonoAval.touched">El Telefono no es valido</span>
+                            </label>
+                                <input type="text"  #telefonoAval="ngModel" [(ngModel)]="encuestaSeleccionada.telefono_aval" class="form-control" name="telefonoAval" required>
+  
+                          <hr>
+                          <h3>Referencias Familiares</h3>
+                          <label>
+                                  Nombre del Familiar:
+                                  <span class="label label-danger" *ngIf="!nombreFamiliar.valid && nombreFamiliar.touched">El Nombre no es valido</span>
+                                </label>
+                                    <input type="text"  #nombreFamiliar="ngModel" [(ngModel)]="encuestaSeleccionada.nombre_familiar" class="form-control" name="nombreFamiliar" required>
+      
+                                  <label>
+                                      Parentesco: 
+                                      <span class="label label-danger" *ngIf="!parentesco.valid && parentesco.touched">El parentesco no es valido</span>
+                                    </label>
+                                        <input type="text"  #parentesco="ngModel" [(ngModel)]="encuestaSeleccionada.parentesco" class="form-control" name="parentesco" required>
+          
+                                  <label>
+                                      Teléfono: 
+                                      <span class="label label-danger" *ngIf="!telFamiliar.valid && telFamiliar.touched">El telefono no es valido</span>
+                                    </label>
+                                        <input type="text"  #telFamiliar="ngModel" [(ngModel)]="encuestaSeleccionada.telefono_familiar" class="form-control" name="telFamiliar" required>
+          
+                          <hr>
+                          <h4>Datos Extras</h4>
+                  
+                        <label for="">Como se Enteró del Servicio
+                        <span class="label label-danger" *ngIf="!comoSupo.valid && comoSupo.touched">El dato no es valido</span>
+                        </label>
+                        <input type="text"  #comoSupo="ngModel" [(ngModel)]="encuestaSeleccionada.como_supo" class="form-control" name="comoSupo" required>
+                        <br>
+
+                        <input  type="submit" value="Registrar" [disabled]="!encuestaForm.form.valid" class="btn btn-success" name="guardar" title="Registrar" >
+                        <a class="btn btn-primary" style="margin-left: 3px" (click)="limpiarForm(encuestaForm);">Limpiar Formulario</a>
+                    </form>
+<!-- Fin del formulario -->
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- Fin del modal -->

@@ -1,0 +1,117 @@
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa-thumbs-o-up"></i>Giro negocios</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+    <!-- Aqui va opcion para añadir otro -->
+    <div class="col-lg-12">
+        <a href="#myModal" data-toggle="modal" class="btn btn-success"><i class="fa fa-plus"> Añadir Nuevo</i></a>
+    </div>
+    <br>
+    <!-- Aqui va la tabla -->
+    <div class="col-lg-12">
+        <div class="row" *ngIf="girosNegocios">
+            <div class="col-lg-12">
+                  <section class="panel">
+                    <header class="panel-heading">
+                        Lista de Sucursales
+                    </header>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th><i class="fa fa-check"></i>  Id del giro</th>
+                                    <th><i class= "fa fa-info"></i>  Descripcion</th>
+                                    <th class="fa fa-bars">  Opciones</th>
+                                </tr>
+                                <tr *ngFor="let giro of girosNegocios">
+                                    <td>id:{{giro.idgiro}}</td>
+                                    <td>{{giro.descripcion}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" title="Modificar" (click)="updateGiro(giro)" href="#update" data-toggle="modal"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-danger" title="Eliminar"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                <tr>
+                                </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                  </section>
+            </div>
+        </div>
+    </div>
+    <!-- Aqui termina la tabla -->
+    <!-- pagination -->
+    <div class="text-center" *ngIf="girosNegocios">
+        <ul class="pagination">
+          <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+          <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+          <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+        </ul>
+        <div class="text-center">
+            <span class="badge bg-success">{{pag}}</span>
+        </div>
+    </div>
+    <!-- end pagination -->
+    <!-- mensaje cargando giros -->
+    <div  *ngIf="!girosNegocios">
+        <span>Cargando Giros...</span>
+    </div>
+    <!-- fin de mensaje -->
+</div>            
+<!--main content end-->
+
+<!-- Inicio del modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Añadir nuevo giro</h4>
+        </div>
+        <div class="modal-body">
+<!-- Inicio del formulario -->
+            <form #giroForm="ngForm"  (ngSubmit)="guardarGiro();limpiarForm(giroForm)" role="form">
+                <div class="form-group">
+                    <label for="descipcion">Descrpcion del giro:</label>
+                    <span class="label label-danger" *ngIf="!descipcion.valid && descipcion.touched">La descipcion no es valida</span>
+                    <input type="text" #descipcion="ngModel" [(ngModel)]="giroNegocio.descripcion" name="descripcripciocion" id="descipcion" class="form-control"  required>
+                </div>
+                <input type="submit" class="btn btn-success" value="Guardar" [disabled]="!giroForm.form.valid" title="Complete el formulario para guadar el producto">
+                <button class="btn btn-success" (click)="limpiarForm(giroForm)">Limpiar</button>
+            </form>
+<!-- Fin del formulario -->
+        </div>
+    </div>
+</div>
+</div>
+<!-- Fin del modal -->
+
+<!-- Inicio del modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="update" class="modal fade">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Añadir nuevo giro</h4>
+        </div>
+        <div class="modal-body">
+<!-- Inicio del formulario -->
+            <form #giroForm="ngForm"  (ngSubmit)="saveUpdate();limpiarForm(giroForm)" role="form">
+                <div class="form-group">
+                    <label for="descipcion">Descrpcion del giro:</label>
+                    <span class="label label-danger" *ngIf="!descipcion.valid && descipcion.touched">La descipcion no es valida</span>
+                    <input type="text" #descipcion="ngModel" [(ngModel)]="giroNegocio.descripcion" name="descripcripciocion" id="descipcion" class="form-control"  required>
+                </div>
+                <input type="submit" class="btn btn-success" value="Guardar" [disabled]="!giroForm.form.valid" title="Complete el formulario para guadar el producto">
+                <button class="btn btn-success" (click)="limpiarForm(giroForm)">Limpiar</button>
+            </form>
+<!-- Fin del formulario -->
+        </div>
+    </div>
+</div>
+</div>
+<!-- Fin del modal -->

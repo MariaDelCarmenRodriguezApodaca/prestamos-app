@@ -1,0 +1,132 @@
+
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-dollar"></i>{{titulo}}</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+  <div class="col-lg-12">
+      <div class="row" *ngIf="prestamos">
+          <div class="col-lg-12">
+              <section class="panel">
+              <header class="panel-heading">
+                  Lista de Prestamos
+              </header>
+              <div class="table-responsive">
+              <table class="table">
+              <tbody>
+          
+                  <tr>
+          
+                      <th><i class="fa fa-user"></i> Cliente</th>
+                      <th><i class="fa fa-building"></i>  Negocio</th>
+                      <th><i class="fa fa-dollar"></i>  Monto Solicitado</th>
+                      <th><i class="fa fa-money"></i> Monto con Interes</th>
+                      <th><i class="fa fa-credit-card"></i> Tipo Credito</th>
+                      <th><i class="fa fa-clock-o"></i> Tiempo </th>
+                      <th><i class="fa fa-check"></i> Status</th> 
+                      <th><i class="fa fa-eye"></i> Ver Todo</th>                       
+  
+                  </tr>
+              
+              
+              <tr *ngFor="let prestamo of prestamos">
+                    
+                      <th><i class="fa fa-user "></i>  {{prestamo.idcliente}}</th>
+                      <th><i class="fa fa-building "></i>  {{prestamo.idnegocio}}</th>
+                      <th><i class="fa fa-dollar "></i>   {{prestamo.monto_solicitado}}</th>
+                      <th><i class="fa fa-money "></i>   {{prestamo.monto_conInteres}}</th>
+                      <th><i class="fa fa-credit-card "></i>   {{prestamo.idprestamo}}</th>
+                      <th><i class="fa fa-clock-o "></i>  {{prestamo.tiempo}}</th>
+                      <th><i class="fa fa-check "></i>  {{prestamo.status}}</th>
+                      
+                      <td>
+                          <div class="btn-group">
+                              <a class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="verDatos(prestamo)"><i class="fa fa-eye"></i></a>
+                          </div>
+                      </td>
+
+              </tr>
+              
+              </tbody>
+          </table>
+          </div>
+          </section>
+      </div> 
+      <!-- Modal Imagen -->
+      <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Información de Prestamos</h4>
+              </div>
+              <div class="modal-body">
+                  <!-- Cuerpo del modal -->
+                      <b>Nombre del Cliente:</b>
+                      <label class="margin-left-3">{{infoPrestamo.idcliente}}</label><br>
+                      <b>Negocio:</b>
+                      <label class="margin-left-3">{{infoPrestamo.idnegocio}} {{infoPrestamo.app_pat}} {{infoPrestamo.app_mat}} </label><br>
+                      <b>Fecha Solicitud:</b>
+                      <label class="margin-left-3">{{infoPrestamo.fecha_solicitud}}</label><br>
+                      <b>Monto Solicitado:</b>
+                      <label class="margin-left-3">{{infoPrestamo.monto_solicitado}}</label><br>
+                      <b>Monto con Interés:</b>
+                      <label class="margin-left-3">{{infoPrestamo.monto_conInteres}}</label><br>
+                      <b>Monto Aprobado</b>
+                      <label *ngIf="infoPrestamo.status=='A'" class="margin-left-3">{{infoPrestamo.monto_aprobado}}</label>
+                      <label *ngIf="infoPrestamo.status=='R'" class="margin-left-3">El prestamo no fue aprobado</label>
+                      <label *ngIf="infoPrestamo.status=='?'" class="margin-left-3">El prestamo aun no es aprobado o rechazado</label>
+                      <br><br>
+                      <!--<strong>Tipo de Credito</strong><br>-->
+                      <b>Tipo de Crédito:</b>
+                      <label class="margin-left-3">{{infoPrestamo.idprestamo}}</label><br>
+                      <b>Status:</b>
+                      <label class="margin-left-3">{{infoPrestamo.status}}</label><br>
+                      <b>Fecha de Aprobación:</b>
+                      <label class="margin-left-3">{{infoPrestamo.fecha_aprobacion}}</label><br>
+                      <b>Monto de Atraso:</b>
+                      <label class="margin-left-3">{{infoPrestamo.monto_atraso}}</label><br>
+                      <b>Tiempo de Credito:</b>
+                      <label class="margin-left-3">{{infoPrestamo.tiempo}}</label><br>
+                      <b>Interes:</b>
+                      <label class="margin-left-3">{{infoPrestamo.interes}}</label><br>
+                      <b>Sucursal:</b>
+                      <label class="margin-left-3">{{infoPrestamo.idsucursal}}</label><br>
+                      <b>Empresa:</b>
+                      <label class="margin-left-3">{{infoPrestamo.idempresa}}</label><br>
+                      
+              </div>
+              <div class="modal-footer">
+             <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+              </div>
+          </div>
+          
+          </div>
+      </div>
+      <!-- Fin del MODAL Imagen -->
+  </div>
+   <!-- pagination -->
+  <div class="text-center" *ngIf="prestamos">
+      <ul class="pagination">
+         
+          <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+          
+      </ul>
+      <div class="text-center">
+          <span class="badge bg-success">{{pag}}</span>
+      </div>
+  </div>
+  <!-- end pagination -->
+      <!-- mensaje cargando negocios -->
+      <div  *ngIf="!prestamos">
+          <span>Cargando Prestamos...</span>
+      </div>
+      <!-- fin de mensaje -->
+</div>            
+
+
+<!--main content end-->

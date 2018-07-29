@@ -1,0 +1,122 @@
+
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-check-square"></i> Nuevo Negocio</h3>
+  </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+  <div class="col-lg-12">
+      <form #negocioForm="ngForm" (ngSubmit)="addNegocio();limpiarForm(negocioForm)" class="" id="negocioForm">
+          <label>
+              Cliente: 
+              <span class="label label-danger" *ngIf="!idCliente.valid && idCliente.touched">El Id del cliente no es valido</span> 
+          </label>
+          <!-- <input type="text" #idCliente="ngModel" [(ngModel)]="nuevoNegocio.idcliente" class="form-control" name="idCliente" required> -->
+          <select #idCliente="ngModel" [(ngModel)]="nuevoNegocio.idcliente" name="idcliente" class="form-control m-bot15" >
+              <option value="{{cliente.idcliente}}" *ngFor='let cliente of clientes'>id: {{cliente.idcliente}}, Nombre: {{cliente.nombres}} {{cliente.app_pat}} {{cliente.app_mat}}</option>
+          </select>
+          <label>
+              Nombre del negocio: 
+              <span class="label label-danger" *ngIf="!nombreNegocio.valid && nombreNegocio.touched">El nombre no es valido</span> 
+          </label>
+          <input type="text" #nombreNegocio="ngModel" [(ngModel)]="nuevoNegocio.nombre_negocio" class="form-control" name="nombreNegocio" required>
+
+          <label>
+              Colonia: 
+              <span class="label label-danger" *ngIf="!colonia.valid && colonia.touched">La colonia no es valida</span> 
+          </label>
+          <input type="text" #colonia="ngModel" [(ngModel)]="nuevoNegocio.colonia" class="form-control" name="colonia" required>
+
+          <label>
+              Calle y Número: 
+              <span class="label label-danger" *ngIf="!callenum.valid && callenum.touched">La Calle y numero no es valido</span> 
+          </label>
+          <input type="text" #callenum="ngModel" [(ngModel)]="nuevoNegocio.callenum" class="form-control" name="callenum" required>
+
+          <label>
+              Estado:
+              <span class="label label-danger" *ngIf="!estados.valid && estados.touched">El estado no es valido</span> 
+          </label>
+          <select #estados="ngModel" [(ngModel)]="nuevoNegocio.estado" name="estados" class="form-control m-bot15 ">
+              <option value="Aguascalientes">Aguascalientes</option>
+              <option value="Baja California">Baja California</option>
+              <option value="Baja California Sur">Baja California Sur</option>
+              <option value="Campeche">Campeche</option>
+              <option value="Coahuila de Zaragoza">Coahuila de Zaragoza</option>
+              <option value="Colima">Colima</option>
+              <option value="Chiapas">Chiapas</option>
+              <option value="Chihuahua">Chihuahua</option>
+              <option value="Distrito Federal">Distrito Federal</option>
+              <option value="Durango">Durango</option>
+              <option value="Guanajuato">Guanajuato</option>
+              <option value="Guerrero">Guerrero</option>
+              <option value="Hidalgo">Hidalgo</option>
+              <option value="Jalisco">Jalisco</option>
+              <option value="México">México</option>
+              <option value="Michoacán de Ocampo">Michoacán de Ocampo</option>
+              <option value="Morelos">Morelos</option>
+              <option value="Nayarit">Nayarit</option>
+              <option value="Nuevo León">Nuevo León</option>       
+              <option value="Oaxaca">Oaxaca</option>
+              <option value="Puebla">Puebla</option>
+              <option value="Querétaro">Querétaro</option>
+              <option value="Quintana Roo">Quintana Roo</option>
+              <option value="San Luis Potosí">San Luis Potosí</option>
+              <option value="Sinaloa">Sinaloa</option>
+              <option value="Sonora">Sonora</option>
+              <option value="Tabasco">Tabasco</option>
+              <option value="Tamaulipas">Tamaulipas</option>
+              <option value="Tlaxcala">Tlaxcala</option>
+              <option value="Veracruz de Ignacio de la Llave">Veracruz de Ignacio de la Llave</option>
+              <option value="Yucatán">Yucatán</option>
+              <option value="Zacatecas">Zacatecas</option>
+          </select>
+
+          <label>
+              Municipio: 
+              <span class="label label-danger" *ngIf="!municipio.valid && municipio.touched">El Municpio no es valido</span> 
+          </label>
+          <input type="text" #municipio="ngModel" [(ngModel)]="nuevoNegocio.municipio" class="form-control" name="municipio" required>
+
+          <label>
+              Población: 
+              <span class="label label-danger" *ngIf="!poblacion.valid && poblacion.touched">La Población no es valida</span> 
+          </label>
+          <input type="text" #poblacion="ngModel" [(ngModel)]="nuevoNegocio.poblacion" class="form-control" name="poblacion" required>
+
+          <!-- <label>
+              Foto del Negocio: 
+              <span class="label label-danger" *ngIf="!fotoNegocio.valid && fotoNegocio.touched">La imagen cargada no es valida</span> 
+          </label>
+          <input type="file" #fotoNegocio="ngModel" [(ngModel)]="nuevoNegocio.foto_negocio" class="form-control" name="fotoNegocio" required>
+-->
+          <label>
+              Tipo del Negocio: 
+              <span class="label label-danger" *ngIf="!tipoNegocio.valid && tipoNegocio.touched">El tipo del Negocio no es valido</span> 
+          </label>
+          <!-- <input type="text" #tipoNegocio="ngModel" [(ngModel)]="nuevoNegocio.tipo_negocio" class="form-control" name="tipoNegocio" required> -->
+          <select #tipoNegocio="ngModel" [(ngModel)]="nuevoNegocio.tipo_negocio" name="tipo_negocio" class="form-control m-bot15" >
+              <option value="Ambulante"> Ambulante</option>
+              <option value="Establecimiento"> Establecimiento</option>
+          </select>
+
+          <label>
+              Giro del Negocio: 
+              <span class="label label-danger" *ngIf="!giroNegocio.valid && giroNegocio.touched">El Giro del Negocio no es valido</span> 
+          </label>
+          <select #giroNegocio="ngModel" [(ngModel)]="nuevoNegocio.giro_negocio" name="giroNegocio" class="form-control m-bot15" >
+              <option value="{{giro.idgiro}}" *ngFor='let giro of giros'>{{giro.descripcion}}</option>
+          </select>
+          <br>
+           <!-- boton guardar -->
+       <input  type="submit" value="Registrar" [disabled]="!negocioForm.form.valid" class="btn btn-success" name="guardar" title="Registrar" >
+       <button class="btn btn-primary" style="margin-left: 3px">Limpiar Formulario</button>
+
+      </form>
+  </div>
+</div>            
+
+
+<!--main content end-->

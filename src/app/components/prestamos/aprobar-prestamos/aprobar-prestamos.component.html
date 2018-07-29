@@ -1,0 +1,117 @@
+
+<!-- titulo -->
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa-check"></i>{{titulo}}</h3>
+    </div>
+</div>
+<!-- Contenido  -->
+<div class="row">
+    <div class="col-lg-12">
+            <div class="row" *ngIf="prestamos_detallados">
+                    <div class="col-lg-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Prestamos por Aprobar
+                            </header>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th><i class="fa fa-user"></i> Nombre</th> 
+                                    <th><i class="fa fa-mobile"></i>  Telefono</th> 
+                                    <th><i class="fa fa-id-card"></i> Tipo de Crédito</th>
+                                    <th><i class="fa fa-money"></i>Monto Solicitado</th>
+                                    <th><i class="fa fa-check"></i>Status</th>
+                                    <th><i class="fa fa-pencil"></i> Opciones</th>
+                                </tr>
+                                <tr *ngFor="let prestamo of prestamos_detallados">
+                                        <td><i class="fa fa-user"></i>  {{prestamo.cliente_nombres}}</td> 
+                                        <td><i class="fa fa-mobile"></i>  {{prestamo.cliente_telefono}}</td>
+                                        <td><i class="fa fa-id-card"></i>  {{prestamo.creditos_descripcion}}</td>   
+                                        <td><i class="fa fa-money"></i>  {{prestamo.monto_solicitado}}</td>
+                                        <td><i class="fa fa-check"></i> {{prestamo.status}}</td>
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-success" data-toggle="modal" data-target="#myModal1" (click)="aprobar(prestamo)"><i class="fa fa-check"></i></a>
+                                                <a class="btn btn-danger" data-toggle="modal" data-target="#myModal2" (click)="rechazar(prestamo)"><i class="fa fa-times"></i></a>
+                                                <a class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="ver(prestamo)"><i class="fa fa-eye"></i></a>
+
+                                            </div>
+                                        </td>
+                                </tr>
+                                
+                                </tbody>
+                            </table> 
+                        </div>          
+
+                        </section>
+                    </div>
+            </div> 
+        </div>
+
+
+             <!-- pagination -->
+            <div class="text-center" *ngIf="prestamos_detallados">
+                <ul class="pagination">
+                    <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+                    <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+                    <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+                </ul>
+                <div class="text-center">
+                    <span class="badge bg-success">{{pag}}</span>
+                </div>
+            </div>
+            <!-- end pagination -->
+
+            <!-- mensaje cargando  -->
+            <div  *ngIf="!prestamos_detallados">
+                <span>Cargando Prestamos por Aprobar...</span>
+            </div>
+            <!-- fin de mensaje -->
+
+
+                 <!-- Modal -->
+            <div class="modal fade" id="infoModal" role="dialog">
+                    <div class="modal-dialog">
+                    
+                    <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Informacion detallada del prestamo</h4>
+                            </div>
+                                    
+                            <div class="modal-body">
+                                    <!-- Cuerpo del modal -->                            
+                                <b>Nombre completo del cliente:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.cliente_nombres}} {{info_prestamo_detallada.cliente_app_pat}}  {{info_prestamo_detallada.cliente_app_mat}}</label><br>
+                                <b>Telefono del cliente:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.cliente_telefono}}</label><br>
+                                <b>Negocio del cliente:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.cliente_negocio}}</label><br>
+                                <b>Tipo de Negocio:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.tipo_negocio}}</label><br>                            
+                                <b>Tipo de Crédito:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.creditos_descripcion}}</label><br>
+                                <b>Monto Solicitado:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.monto_solicitado}}</label><br>
+                                <b>Interes Generado:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.monto_interes}}</label><br>
+                                <b>Monto Solicitado + Interes Generado:</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.monto_conInteres}}</label><br>
+                                <b>Status del prestamo</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.status}}</label><br>
+                                <b>Trabajador Capturista</b>
+                                <label class="margin-left-3">{{info_prestamo_detallada.empleado_captura}}</label><br>
+                                    
+                            </div>
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                            </div>
+                        </div>
+                    
+                    </div>
+            </div>
+</div>            

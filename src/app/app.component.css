@@ -1,0 +1,35 @@
+
+.letra-chica{
+	font-size: 10px;
+}
+.letra-mediana{
+	font-size: 13px;
+}
+.letra-grande{
+	font-size: 18px;
+}
+.margin-1{
+	margin: 1%;
+}
+.margin-2{
+	margin: 2%;
+}
+
+.margin-3{
+	margin: 3%;
+}
+.margin-left-3{
+	margin-left: 3% !important;
+}
+
+.rojito{
+	color: #E94B4B;
+}
+
+.linkActivado{
+	color: rgb(146, 245, 107) !important;
+	border-radius: 2px !important;
+	font-style: all !important;
+	text-decoration: none !important;
+	border-bottom: 4px solid rgb(146, 245, 107) !important;
+}

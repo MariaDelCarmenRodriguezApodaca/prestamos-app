@@ -11,6 +11,7 @@ export class Empleado{
         public municipio:string,
         public poblacion:string,
         public telefono:string,
+        public nss:string,
         public fecha_alta:string,
         public negocio:number,//id de la empresa
         public sucursal:number,//id de la sucursal

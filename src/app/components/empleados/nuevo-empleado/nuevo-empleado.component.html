@@ -41,7 +41,7 @@
 
               <label>
                   Estado:
-                  <span class="label label-danger" *ngIf="!estados.valid && colonia.touched">La colonia no es valida</span> 
+                  <span class="label label-danger" *ngIf="!estados.valid && estados.touched">El estado no es valido</span> 
               </label>
               <select #estados="ngModel" [(ngModel)]="nuevoEmpleado.estado"  name="estados" class="form-control m-bot15 " required>
                   <option value="Aguascalientes">Aguascalientes</option>
@@ -94,22 +94,26 @@
                   Telefono:
                   <span class="label label-danger" *ngIf="!telefono.valid && telefono.touched">El telefono no es valido</span> 
               </label>
-              <input type="text" #telefono="ngModel" [(ngModel)]="nuevoEmpleado.telefono" class="form-control" name="telefono" required>
+              <input type="tel" #telefono="ngModel" [(ngModel)]="nuevoEmpleado.telefono" class="form-control" name="telefono" (keypress)="validarTel()"  placeholder="(xxx)yyy-zzzz" pattern="^\([0-9]{3}\)[0-9]{3}-[0-9]{4}" maxlength="13" minlength="13" required>
+              <label>
+                    No. Seguridad Social:
+                    <span class="label label-danger" *ngIf="!nss.valid && nss.touched">El numero de segurudad social no es valido</span> 
+                </label>
+                <input type="text" maxlength="11" minlength="11" #nss="ngModel" [(ngModel)]="nuevoEmpleado.nss" class="form-control" name="nss" placeholder="11 digitos" pattern="[0-9]{11}" required>
+                
               <label>
                   Empresa:
                   <span class="label label-danger" *ngIf="!negocio.valid && negocio.touched">El nombre del negocio no es valido</span> 
               </label>
-              <!-- <input type="text" #negocio="ngModel" [(ngModel)]="nuevoEmpleado.negocio" class="form-control" name="negocio" required> -->
               <select #negocio="ngModel" [(ngModel)]="nuevoEmpleado.negocio" class="form-control" name="negocio"  class="form-control m-bot15" required>
-                  <option value="{{empresa.razon_social}}" *ngFor="let empresa of empresas">{{empresa.razon_social}}</option>
+                  <option value="{{empresa.idempresa}}" *ngFor="let empresa of empresas">{{empresa.razon_social}}</option>
               </select>
               <label>
                   Sucursal:
                   <span class="label label-danger" *ngIf="!sucursal.valid && sucursal.touched">El nombre de al sucursal no es valida</span> 
               </label>
-              <!-- <input type="text" #sucursal="ngModel" [(ngModel)]="nuevoEmpleado.sucursal"  name="sucursal" class="form-control" required> -->
               <select  #sucursal="ngModel" [(ngModel)]="nuevoEmpleado.sucursal"  name="sucursal"   class="form-control m-bot15" required>
-                  <option value="{{sucursal.nombre}}" *ngFor="let sucursal of sucursales">{{sucursal.nombre}}</option>
+                  <option value="{{sucursal.idsucursal}}" *ngFor="let sucursal of sucursales">{{sucursal.nombre}}</option>
               </select>
               <label>
                   Usuario:
@@ -127,7 +131,6 @@
                   Puesto:
                   <span class="label label-danger" *ngIf="!puesto.valid && puesto.touched">El puesto no es valido</span> 
               </label>
-              <!-- <input type="text" #puesto="ngModel" [(ngModel)]="nuevoEmpleado.puesto" class="form-control" name="puesto" required> -->
               <select #puesto="ngModel" [(ngModel)]="nuevoEmpleado.puesto" class="form-control m-bot15 " name="puesto" required>
                   <option value="Supervisor">Supervisor</option>
                   <option value="Capturista">Capturista</option>
@@ -138,9 +141,8 @@
                   <span class="label label-danger" *ngIf="!derechosEsp.valid && derechosEsp.touched">El puesto no es valido</span> 
               </label>
               <select class="form-control m-bot15 " #derechosEsp="ngModel" [(ngModel)]="nuevoEmpleado.derecho_esp" name="derechosEsp" id="derechosEsp" required>
-                  <option value=""></option>
                   <option value="1">Si</option>
-                  <option value="0">No</option>
+                  <option value="0" selected="selected">No</option>
               </select>
           
               <br>

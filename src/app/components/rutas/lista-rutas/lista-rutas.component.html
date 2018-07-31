@@ -26,14 +26,14 @@
                                     <!-- <th><i class="fa fa-building"></i> IdEmpresa</th> -->
                                     <th><i class="fa fa-pencil"></i>Editar</th>
                                 </tr>
-                                <tr *ngFor="let ruta of rutas">                                        
-                                    <td><i class="fa fa-user"></i> {{ruta.idruta}}</td>
-                                    <td><i class="fa fa-sdasd"></i> {{ruta.nombre}}</td>
-                                    <td><i class=""></i> {{ruta.colonias}}</td>
-                                    <td><i class=""></i> {{ruta.idsucursal}}</td>
-                                    <td><i class=""></i> {{ruta.status}}</td>
+                                <tr *ngFor="let ruta of rutasDetalles">                                        
+                                    <td><i class="fa fa-user"></i> {{ruta.ruta_idruta}}</td>
+                                    <td><i class="fa fa-sdasd"></i> {{ruta.ruta_nombre}}</td>
+                                    <td><i class=""></i> {{ruta.ruta_colonias}}</td>
+                                    <td><i class=""></i> {{ruta.sucursal_nombre}}</td>
+                                    <td><i class=""></i> {{ruta.ruta_status}}</td>
                                     <td>
-                                        <a class="btn btn-primary" data-toggle="modal" data-target="#editarRuta" (click)="mostrarRuta(ruta)"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#editarRuta" (click)="mostrarRuta(ruta.ruta_idruta)"><i class="fa fa-pencil"></i></a>
                                     </td>
                                 </tr>                                
                             </tbody>
@@ -90,11 +90,14 @@
                         <input type="text" #callenum="ngModel" [(ngModel)]="editarRuta.colonias" class="form-control" name="callenum" required>
                         
                         <label>
-                                Id sucursal: 
+                                Sucursal: 
                             <span class="label label-danger" *ngIf="!idsucursal.valid && idsucursal.touched">El Id sucursal no es valido</span> 
                         </label>
-                        <input type="text" #idsucursal="ngModel" [(ngModel)]="editarRuta.idsucursal" class="form-control" name="idsucursal" required>
-                
+                        <!-- <input type="text" #idsucursal="ngModel" [(ngModel)]="editarRuta.idsucursal" class="form-control" name="idsucursal" required> -->
+                        <select #idsucursal="ngModel" [(ngModel)]="editarRuta.idsucursal" class="form-control m-bot15 " name="idsucursal" required>
+                            <div *ngFor="let sucursal of sucursales"><option value="{{editarRuta.idsucursal}}"  *ngIf="sucursal.idsucursal == editarRuta.idsucursal">{{sucursal.nombre}}</option></div>
+                            <option value="{{sucursal.idsucursal}}" *ngFor="let sucursal of sucursales">{{sucursal.nombre}}</option>
+                        </select>
                         <label>
                             Status:
                             <span class="label label-danger" *ngIf="!status.valid && status.touched">El status no es valido</span> 

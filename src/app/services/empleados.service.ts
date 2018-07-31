@@ -20,7 +20,7 @@ export class EmpleadosService{
 
 	public getEmpleado(){
 		console.log('se corrio getEmpleado()');
-		return this._http.get(this.url+'empleados/get')
+		return this._http.get(this.url+'empleados/get');
 	}
 
 
@@ -39,6 +39,11 @@ export class EmpleadosService{
 		console.log('Se corrio login()');
 		
 		return this._http.post(this.url+'empleados/login',{usuario:usuario,password:password});
+	}
+
+	public getEmpleadoDetalle(){
+		console.log('se corrio getEmpleadoDetalle()');
+		return this._http.get(this.url+'empleados/get_detalles');
 	}
 }
 

@@ -23,8 +23,8 @@
         <input type="text" #callenum="ngModel" [(ngModel)]="nuevaRuta.colonias" class="form-control" name="callenum" required>
         
         <label>
-                Id sucursal: 
-            <span class="label label-danger" *ngIf="!idsucursal.valid && idsucursal.touched">El Id sucursal no es valido</span> 
+            sucursal: 
+            <span class="label label-danger" *ngIf="!idsucursal.valid && idsucursal.touched">La sucursal no es valido</span> 
         </label>
         <select name="idsucursal" #idsucursal="ngModel" [(ngModel)]="nuevaRuta.status" class="form-control m-bot15 " required>
                 <option value="{{sucursal.idsucursal}}" *ngFor="let sucursal of sucursales">{{sucursal.nombre}}</option>

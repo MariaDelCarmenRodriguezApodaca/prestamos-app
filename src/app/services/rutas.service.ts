@@ -42,4 +42,9 @@ export class RutasService {
     console.log('Se corrio getRutasCobrador()');
       return this._http.get(this.url+`rutas/get_ruta_cobrador`);
   }
+
+  public getRutasDetalles(){
+    console.log('Se corrio getRutasDetalles()');
+      return this._http.get(this.url+`rutas/get_detalles`);
+  }
 }

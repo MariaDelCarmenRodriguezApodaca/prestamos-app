@@ -4,6 +4,7 @@ import { RutasService } from '../../../services/rutas.service';
 import { EmpleadosService } from '../../../services/empleados.service';
 import { SucursalesService } from '../../../services/sucursales.service';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from '../../../../../node_modules/ngx-toastr';
 
 @Component({
   selector: 'app-nueva-ruta',
@@ -22,7 +23,8 @@ export class NuevaRutaComponent implements OnInit {
   constructor(
       private _sucursalService:SucursalesService,
       private _empleadosService:EmpleadosService,
-      private _rutasService:RutasService
+      private _rutasService:RutasService,
+      private toastr:ToastrService
   ){
       this.titulo='Añadir Nueva Zona'
       this.nuevaRuta = new Ruta(0,'','',0,'');
@@ -40,10 +42,11 @@ export class NuevaRutaComponent implements OnInit {
           res=>{
               if(res['result']){
                   console.log(res);
-                  alert('Ruta guardada con exito');
+                  this.toastr.success('Ruta guardada','Exito');
               }
               else{
-                  console.log(`Error desde cliente al añadir sucursal ${res}`)
+                  console.log(`Error desde cliente al añadir sucursal ${res}`);
+                  alert('Error!!!, fallo al guardar ruta...');
               }
           });
   }

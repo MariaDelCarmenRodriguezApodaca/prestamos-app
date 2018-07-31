@@ -1,0 +1,25 @@
+export class EmpleadoDetalle {
+    constructor(
+        public empleado_idempleado:number,
+        public empleado_nombres:string,
+        public empleado_app_pat:string,
+        public empleado_app_mat:string,
+        public empleado_callenum:string,
+        public empleado_colonia:string,
+        public empleado_estado:string,
+        public empleado_municipio:string,
+        public empleado_poblacion:string,
+        public empleado_telefono:string,
+        public empleado_nss:string,
+        public empleado_fecha_alta:string,
+        public empleado_usuario:string,
+        public empleado_password:string,
+        public empleado_status:string,
+        public empleado_puesto:string,
+        public empleado_derecho_esp:number,
+        public empresa_idempresa:number,
+        public empresa_razon_social:string,
+        public sucursal_idsucursal:number,
+        public sucursal_nombre:string,
+    ){}
+}

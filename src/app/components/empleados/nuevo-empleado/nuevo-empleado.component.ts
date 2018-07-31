@@ -6,73 +6,93 @@ import { SucursalesService } from '../../../services/sucursales.service';
 import { EmpresasService } from '../../../services/empresas.service';
 import { Empresa } from '../../../models/empresa';
 import { Sucursal } from '../../../models/sucursal';
+import { ToastrModule, ToastrService } from '../../../../../node_modules/ngx-toastr';
 
 @Component({
-  selector: 'app-nuevo-empleado',
-  templateUrl: './nuevo-empleado.component.html',
-  styleUrls: ['./nuevo-empleado.component.css'],
-  providers:[EmpleadosService,EmpresasService,SucursalesService]
+    selector: 'app-nuevo-empleado',
+    templateUrl: './nuevo-empleado.component.html',
+    styleUrls: ['./nuevo-empleado.component.css'],
+    providers:[EmpleadosService,EmpresasService,SucursalesService]
 })
 export class NuevoEmpleadoComponent implements OnInit {
-  public titulo:string;
-  public nuevoEmpleado:Empleado;
-  public empresas:Empresa;
-  public sucursales:Sucursal;
+    public titulo:string;
+    public nuevoEmpleado:Empleado;
 
-  constructor(
-      private _empleadoService:EmpleadosService,
-      private _empresaService:EmpresasService,
-      private _sucursalesService:SucursalesService
-  ){
-      this.titulo='Se Arranco el componente EmpleadoNuevoComponent';
-      this.nuevoEmpleado=new Empleado(0,'','','','','','','','','','',0,0,'','','Activo','',0);
-  }
-  
-  ngOnInit(){
-      console.log(this.titulo);
-      this.ObtenerEmpresas();
-      this.ObtenerSucursales();
-  }
+    // Para llenar select
+    public empresas:Empresa;
+    public sucursales:Sucursal;
 
-  public addEmpleado(){
-      console.log(this.nuevoEmpleado);
-      this._empleadoService.addEmpleado(this.nuevoEmpleado).subscribe(
-          res=>{
-              if(res['result']){
-                  console.log(`Empleado guardado con exito`);
-                  console.log(this.nuevoEmpleado);
-              }else{
-                  console.log(this.nuevoEmpleado);
-                  console.log(res);
-              }
-          });
-  };
+    constructor(
+        private _empleadoService:EmpleadosService,
+        private _empresaService:EmpresasService,
+        private _sucursalesService:SucursalesService,
+        private toastr : ToastrService
+    ){
+        this.titulo='Se Arranco el componente EmpleadoNuevoComponent';
+        this.nuevoEmpleado=new Empleado(0,'','','','','','','','','','','',0,0,'','','Activo','',0);
+    }
+    
+    ngOnInit(){
+        console.log(this.titulo);
+        this.ObtenerEmpresas();
+        this.ObtenerSucursales();
+    }
+
+    public addEmpleado(){
+        console.log(this.nuevoEmpleado);
+        this._empleadoService.addEmpleado(this.nuevoEmpleado).subscribe(
+            res=>{
+                if(res['result']){
+                    this.toastr.success('Nuevo empleado agregado','Exito');
+                    console.log(this.nuevoEmpleado);
+                }else{
+                    alert(`Error!!!, Fallo al intentar agregar un empleado...`);
+                    console.log(this.nuevoEmpleado);
+                    console.log(res);
+                }
+            });
+    };
 
 
-  public limpiarForm(form:NgForm){
-      form.reset();
-      this.nuevoEmpleado=new Empleado(0,'','','','','','','','','','',0,0,'','','Activo','',0);
-  }
+    public limpiarForm(form:NgForm){
+        form.reset();
+        this.nuevoEmpleado=new Empleado(0,'','','','','','','','','','','',0,0,'','','Activo','',0);
+    }
 
-  // Para llenar select 
-  public ObtenerEmpresas(){
-      this._empresaService.getEmpresas().subscribe(
-          result=>{
-              if(result['result']){
-                  this.empresas=result['result'];
-                  console.log(this.empresas);
-              }
-          });
-  }
-  public ObtenerSucursales(){
-      this._sucursalesService.getSucursales().subscribe(
-          result=>{
-              if(result['result']){
-                  this.sucursales=result['result'];
-                  console.log(this.sucursales);
-              }
-          });
-  }
+    // Para llenar select 
+    public ObtenerEmpresas(){
+        this._empresaService.getEmpresas().subscribe(
+            result=>{
+                if(result['result']){
+                    this.empresas=result['result'];
+                    console.log(this.empresas);
+                }
+            });
+    }
+    public ObtenerSucursales(){
+    this._sucursalesService.getSucursales().subscribe(
+        result=>{
+            if(result['result']){
+                this.sucursales=result['result'];
+                console.log(this.sucursales);
+            }
+        });
+    }
+    
+    //Validar (xxx)yyy-zzzz telefonos
+    public validarTel(){
+    var tel = this.nuevoEmpleado.telefono;
+        var tamaño = tel.length;
+        if(tamaño == 3){
+            var parent = "("+tel+")";
+            this.nuevoEmpleado.telefono = parent;
+        }
+        if(tamaño==8){
+            var guion = tel + "-";
+            this.nuevoEmpleado.telefono = guion;
+        }
+    }
+          
 }
 
 // 1public idempleado:number,

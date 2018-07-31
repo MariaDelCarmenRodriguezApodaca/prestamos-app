@@ -2,7 +2,7 @@
 <!-- titulo -->
 <div class="row">
   <div class="col-lg-12">
-      <h3 class="page-header"><i class="fa fa-building-o"></i>Nueva Sucursal</h3>
+      <h3 class="page-header"><i class="fa fa-building-o"></i>Añadir Nueva Sucursal</h3>
   </div>
 </div>
 <!-- Contenido  -->
@@ -104,7 +104,7 @@
               Telefono de la Sucursal: 
               <span class="label label-danger" *ngIf="!telefono.valid && telefono.touched">El telefono no es valido</span> 
           </label>
-          <input type="text" #telefono="ngModel" [(ngModel)]="nuevaSucursal.telefono" class="form-control" name="telefono" required>
+          <input type="tel" #telefono="ngModel" [(ngModel)]="nuevaSucursal.telefono" class="form-control" id="telefono" name="telefono" (keypress)="validarTel()"  placeholder="(xxx)yyy-zzzz" pattern="^\([0-9]{3}\)[0-9]{3}-[0-9]{4}" maxlength="13" minlength="13" required>
 
           <!-- <label>
               Empresa: 

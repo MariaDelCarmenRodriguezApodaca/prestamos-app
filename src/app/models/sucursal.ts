@@ -7,11 +7,10 @@ export class Sucursal{
         public poblacion: string,
         public municipio: string,
         public estado: string,
-        public status: number,
         public hora_inicio: string,
         public hora_fin: string,
         public encargado: string,
-        public telefono: number,
+        public telefono: string,
         // public id_empresa: number
     ){}
 }

@@ -24,7 +24,7 @@ export class NuevaRutaComponent implements OnInit {
       private _empleadosService:EmpleadosService,
       private _rutasService:RutasService
   ){
-      this.titulo='Añadir una Nueva Ruta'
+      this.titulo='Añadir Nueva Zona'
       this.nuevaRuta = new Ruta(0,'','',0,'');
   }
 

@@ -24,8 +24,8 @@ export class NuevaSucursalComponent implements OnInit {
       private _empleadosService:EmpleadosService,
       private _empresaService:EmpresasService
   ){
-      this.titulo='Añadir una Nueva Sucursal'
-      this.nuevaSucursal = new Sucursal(0,'','','','','',null,0,'','',null,0);
+      this.titulo='Añadir Nueva Sucursal'
+      this.nuevaSucursal = new Sucursal(0,'','','','','',null,'','',null,'');
   }
 
   ngOnInit(){
@@ -50,7 +50,7 @@ export class NuevaSucursalComponent implements OnInit {
 
   public limpiarForm(form:NgForm){
       form.reset();
-      this.nuevaSucursal=new Sucursal(0,'','','','','','',0,'','','',0);
+      this.nuevaSucursal=new Sucursal(0,'','','','','','','','','','');
   }
 
 
@@ -73,4 +73,19 @@ export class NuevaSucursalComponent implements OnInit {
               }
           });
   }
+
+  //Validar (xxx)yyy-zzzz telefonos
+  public validarTel(){
+    var tel = this.nuevaSucursal.telefono;
+        var tamaño = tel.length;
+        if(tamaño == 3){
+            var parent = "("+tel+")";
+            this.nuevaSucursal.telefono = parent;
+        }
+        if(tamaño==8){
+            var guion = tel + "-";
+            this.nuevaSucursal.telefono = guion;
+        }
+  }
+  
 }

@@ -2,7 +2,7 @@
 <!-- titulo -->
 <div class="row">
     <div class="col-lg-12">
-        <h3 class="page-header"><i class="fa fa-building-o"></i>Nueva Sucursal</h3>
+        <h3 class="page-header"><i class="fa fa-sitemap"></i>Asignar Zona Cobrador</h3>
     </div>
   </div>
   <!-- Contenido  --> 
@@ -11,7 +11,7 @@
     <form #rutasCobradorForm="ngForm"  (ngSubmit)="addRutaXCobrador();limpiarForm(rutasCobradorForm)" role="form">
         <br>
         <label>
-            Ruta: 
+            Zona: 
             <span class="label label-danger" *ngIf="!ruta.valid && ruta.touched">El nombre no es valido</span> 
         </label>
         <!-- <input type="text" #ruta="ngModel" [(ngModel)]="nuevaRutaXCobrador.ruta" class="form-control" name="ruta" required> -->
@@ -36,14 +36,14 @@
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
-                        Rutas Asignadas
+                        Zonas Asignadas
                     </header>
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>
                                 <tr>
                                     <th><i class="fa fa-user"></i> Empleado</th>
-                                    <th><i class="fa fa-sasdasd"></i> Ruta</th>
+                                    <th><i class="fa fa-car"></i> Ruta</th>
                                 </tr>
                                 <tr *ngFor="let ruta of rutasXCobrador">                                        
                                     <td><i class="fa fa-user"></i> {{ruta.empleado_nombres}} {{ruta.empleado_app_pat}} {{ruta.empleado_app_mat}}</td>

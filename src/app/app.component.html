@@ -20,16 +20,16 @@
         <li class="active">
           <a class="" [routerLink]="['/home']" [routerLinkActive]="['linkActivado']"><i class="fa fa-home"></i><span>Inicio</span></a>
         </li>
-        <li class="sub-menu" *ngIf="empleado_log.puesto=='Administrador'">
+        <li class="sub-menu" *ngIf="empleado_log.puesto=='Administrador'" >
           <a href="javascript:;" class="">
-            <i class="fa fa-building"></i>
-            <span>Sucursales</span>
-            <span class="menu-arrow arrow_carrot-right"></span>
-          </a>
-            <!-- Esto esta adentro de sucursales -->
+                <i class="fa fa-building-o"></i>
+                <span>Empresas</span>
+                <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <!-- Esto esta adentro de empresas -->
                 <ul class="sub">
-                  <li><a class="" [routerLink]="['/lista-sucursales']" [routerLinkActive]="['linkActivado']">Lista de sucursales</a></li>
-                  <li><a class="" [routerLink]="['/nueva-sucursal']" [routerLinkActive]="['linkActivado']">Registro de sucursales</a></li>
+                  <li><a class="" [routerLink]="['/lista-empresas']" [routerLinkActive]="['linkActivado']">Lista de empresas</a></li> 
+                  <li><a class="" [routerLink]="['/nueva-empresa']" [routerLinkActive]="['linkActivado']">Registro de empresa</a></li>     
                 </ul>
         </li>
         <li class="sub-menu" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'">
@@ -44,19 +44,33 @@
                   <li><a class="" [routerLink]="['/nuevo-empleado']" [routerLinkActive]="['linkActivado']">Registro de empleados</a></li>
                 </ul>
         </li>
+        <li class="sub-menu" *ngIf="empleado_log.puesto=='Administrador'">
+          <a href="javascript:;" class="">
+            <i class="fa fa-building"></i>
+            <span>Sucursales</span>
+            <span class="menu-arrow arrow_carrot-right"></span>
+          </a>
+            <!-- Esto esta adentro de sucursales -->
+                <ul class="sub">
+                  <li><a class="" [routerLink]="['/lista-sucursales']" [routerLinkActive]="['linkActivado']">Lista de sucursales</a></li>
+                  <li><a class="" [routerLink]="['/nueva-sucursal']" [routerLinkActive]="['linkActivado']">Registro de sucursales</a></li>
+                </ul>
+        </li>
+        
         <li class="sub-menu" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'">
-            <a href="javascript:;" class="">
-                  <i class="fa fa-user"></i>
-                  <span>Rutas</span>
-                  <span class="menu-arrow arrow_carrot-right"></span>
-              </a>
-              <!-- Esto esta adentro de Empelados -->
-                  <ul class="sub">
-                    <li><a class="" [routerLink]="['/lista-rutas']" [routerLinkActive]="['linkActivado']">Lista de rutas</a></li>
-                    <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/nueva-ruta']" [routerLinkActive]="['linkActivado']">Registro de rutas</a></li>
-                    <li><a class="" [routerLink]="['/ruta-cobrador']" [routerLinkActive]="['linkActivado']">Asignacion de rutas</a></li>
-                  </ul>
-          </li>
+          <a href="javascript:;" class="">
+                <i class="fa fa-car"></i>
+                <span>Zonas</span>
+                <span class="menu-arrow arrow_carrot-right"></span>
+            </a>
+            <!-- Esto esta adentro de rutas -->
+                <ul class="sub">
+                  <li><a class="" [routerLink]="['/lista-rutas']" [routerLinkActive]="['linkActivado']">Lista de Zonas</a></li>
+                  <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/nueva-ruta']" [routerLinkActive]="['linkActivado']">Registro de Zonas</a></li>
+                  <li><a class="" [routerLink]="['/ruta-cobrador']" [routerLinkActive]="['linkActivado']">Asignacion de Zonas</a></li>
+                </ul>
+        </li>
+ 
         <li class="sub-menu" >
           <a href="javascript:;" class="">
                 <i class="fa fa-users"></i>
@@ -69,31 +83,33 @@
                   <li><a class="" [routerLink]="['/nuevo-cliente']" [routerLinkActive]="['linkActivado']" >Registro de clientes</a></li>
                 </ul>
         </li>
-        <li class="sub-menu" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador' || empleado_log.puesto=='Capturista'" >
-          <a href="javascript:;" class="">
-              <i class="fa fa-users"></i>
-              <span>Encuestas</span>
-              <span class="menu-arrow arrow_carrot-right"></span>
-          </a>
-          <!-- Esto esta adentro de clientes -->
-              <ul class="sub">
-                <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/encuestas-realizadas']" [routerLinkActive]="['linkActivado']">Encuestas realizadas</a></li>
-                <li><a class=""  *ngIf="empleado_log.puesto=='Capturista' || empleado_log.puesto=='Administrador'" [routerLink]="['/encuestas-pendientes']" [routerLinkActive]="['linkActivado']">Encuestas pendientes</a></li>
-              </ul>
-        </li>
         <li class="sub-menu">
           <a href="javascript:;" class="">
                 <i class="fa fa-building-o"></i>
                 <span>Negocios</span>
                 <span class="menu-arrow arrow_carrot-right"></span>
             </a>
-            <!-- Esto esta adentro de noegocios -->
+            <!-- Esto esta adentro de negocios -->
                 <ul class="sub">
                   <li><a class="" [routerLink]="['/lista-negocios']" [routerLinkActive]="['linkActivado']">Lista de negocios</a></li>
                   <li><a class="" [routerLink]="['/nuevo-negocio']" [routerLinkActive]="['linkActivado']">Registro de negocios</a></li>
                   <li ><a class="" *ngIf="empleado_log.puesto=='Administrador'" [routerLink]="['/giros-negocio']" [routerLinkActive]="['linkActivado']">Giro de negocios</a></li>
                 </ul>
         </li>
+        
+        <li class="sub-menu" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador' || empleado_log.puesto=='Capturista'" >
+          <a href="javascript:;" class="">
+              <i class="fa fa-users"></i>
+              <span>Encuestas</span>
+              <span class="menu-arrow arrow_carrot-right"></span>
+          </a>
+          <!-- Esto esta adentro de encuestas -->
+              <ul class="sub">
+                <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/encuestas-realizadas']" [routerLinkActive]="['linkActivado']">Encuestas realizadas</a></li>
+                <li><a class=""  *ngIf="empleado_log.puesto=='Capturista' || empleado_log.puesto=='Administrador'" [routerLink]="['/encuestas-pendientes']" [routerLinkActive]="['linkActivado']">Encuestas pendientes</a></li>
+              </ul>
+        </li>
+        
         <li class="sub-menu">
           <a href="javascript:;" class="">
                 <i class="fa fa-credit-card"></i>
@@ -117,23 +133,11 @@
             <!-- Esto esta adentro de cobros -->
                 <ul class="sub">
                   <li><a *ngIf="empleado_log.puesto=='Administrador' || empleado_log.puesto=='Gerente'" [routerLink]="['/lista-cobros']" [routerLinkActive]="['linkActivado']">Lista de cobros</a></li>
-                  <li><a *ngIf="empleado_log.puesto=='Administrador' || empleado_log.puesto=='Gerente'" [routerLink]="['/lista-cobros']" [routerLinkActive]="['linkActivado']">Lista de cobros</a></li>
                   <li><a *ngIf="empleado_log.puesto=='Cobrador' || empleado_log.puesto=='Administrador'"  [routerLink]="['/cobros-dia']" [routerLinkActive]="['linkActivado']">Cobros por Realizar</a></li>
                   <li><a [routerLink]="['/pagos-atrasados']" [routerLinkActive]="['linkActivado']">Pagos atrasados</a></li>
                 </ul>
         </li>
-        <li class="sub-menu" *ngIf="empleado_log.puesto=='Administrador'" >
-          <a href="javascript:;" class="">
-                <i class="fa fa-building-o"></i>
-                <span>Empresas</span>
-                <span class="menu-arrow arrow_carrot-right"></span>
-            </a>
-            <!-- Esto esta adentro de noegocios -->
-                <ul class="sub">
-                  <li><a class="" [routerLink]="['/lista-empresas']" [routerLinkActive]="['linkActivado']">Lista de empresas</a></li> 
-                  <li><a class="" [routerLink]="['/nueva-empresa']" [routerLinkActive]="['linkActivado']">Registro de empresa</a></li>     
-                </ul>
-        </li>
+        
         <li class="sub-menu">
             <a class="" (click)="salir()"><i class="fa fa-sign-out"></i><span>Salir</span></a>
           </li>

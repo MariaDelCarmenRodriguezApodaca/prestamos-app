@@ -31,8 +31,8 @@ export class ListaSucursalesComponent implements OnInit {
   constructor(
       private _sucursalesService:SucursalesService
   ){
-      this.titulo='Se arranco el componente de sucursales';
-      this.editarSucursal = new Sucursal(0,'','','','','','',0,'','','',0);
+      this.titulo='Sucursales';
+      this.editarSucursal = new Sucursal(0,'','','','','','','','','','');
       this.arrayPag=[];
       this.pag = 1;
   }
@@ -74,7 +74,7 @@ export class ListaSucursalesComponent implements OnInit {
   
   public limpiarForm(form:NgForm){
       form.reset();
-      this.editarSucursal=new Sucursal(0,'','','','','','',0,'','','',0);
+      this.editarSucursal=new Sucursal(0,'','','','','','','','','','');
       this.ObtenerSucursales;
   }
 
@@ -120,6 +120,21 @@ export class ListaSucursalesComponent implements OnInit {
       }
       console.log(this.sucursales);
   }
+
+    //Validar (xxx)yyy-zzzz telefonos
+    public validarTel(){
+    var tel = this.editarSucursal.telefono;
+        var tamaño = tel.length;
+        if(tamaño == 3){
+            var parent = "("+tel+")";
+            this.editarSucursal.telefono = parent;
+        }
+        if(tamaño==8){
+            var guion = tel + "-";
+            this.editarSucursal.telefono = guion;
+        }
+    }
+      
   
 
 }

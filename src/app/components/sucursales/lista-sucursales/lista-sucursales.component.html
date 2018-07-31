@@ -178,7 +178,7 @@
                           Telefono de la Sucursal: 
                           <span class="label label-danger" *ngIf="!telefono.valid && telefono.touched">El telefono no es valido</span> 
                       </label>
-                      <input type="text" #telefono="ngModel" [(ngModel)]="editarSucursal.telefono" class="form-control" name="telefono" required>
+                      <input type="tel" #telefono="ngModel" [(ngModel)]="editarSucursal.telefono" class="form-control" name="telefono" (keypress)="validarTel()"  placeholder="(xxx)yyy-zzzz" pattern="^\([0-9]{3}\)[0-9]{3}-[0-9]{4}" maxlength="13" minlength="13" required>
           
                       <!-- <label>
                           Id Empresa: 
@@ -187,14 +187,8 @@
                       <input type="text" #IdEmpresa="ngModel" [(ngModel)]="editarSucursal.id_empresa" class="form-control" name="IdEmpresa" required>
            -->
                       <br>
-                      <label>
-                          Status:
-                          <span class="label label-danger" *ngIf="!status.valid && status.touched">El status no es valido</span> 
-                      </label>
-                      <select name="status" #status="ngModel" [(ngModel)]="editarSucursal.status" class="form-control m-bot15 " required>
-                              <option value="1">Alta</option>
-                              <option value="0">Baja</option>
-                      </select>
+                      
+                      
                           <!-- boton guardar -->
                       <input  type="submit" value="Guardar cambios" [disabled]="!sucursalForm.form.valid" class="btn btn-success" name="guardar" title="guardar cambios" >
                       <button class="btn btn-primary" style="margin-left: 3px" (click)="limpiarForm(sucursalForm)">Limpiar Formulario</button>

@@ -29,7 +29,7 @@ export class ListaRutasComponent implements OnInit {
   constructor(
       private _rutasService:RutasService
   ){
-      this.titulo='Se arranco el componente de sucursales';
+      this.titulo='Zonas';
       this.editarRuta = new Ruta(0,'','',0,'');
       this.arrayPag=[];
       this.pag = 1;

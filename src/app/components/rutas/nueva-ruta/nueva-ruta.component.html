@@ -26,7 +26,7 @@
             sucursal: 
             <span class="label label-danger" *ngIf="!idsucursal.valid && idsucursal.touched">La sucursal no es valido</span> 
         </label>
-        <select name="idsucursal" #idsucursal="ngModel" [(ngModel)]="nuevaRuta.status" class="form-control m-bot15 " required>
+        <select name="idsucursal" #idsucursal="ngModel" [(ngModel)]="nuevaRuta.idsucursal" class="form-control m-bot15 " required>
                 <option value="{{sucursal.idsucursal}}" *ngFor="let sucursal of sucursales">{{sucursal.nombre}}</option>
         </select>
         <label>

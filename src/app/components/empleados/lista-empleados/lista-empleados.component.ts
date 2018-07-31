@@ -74,6 +74,7 @@ export class ListaEmpleadosComponent implements OnInit {
             if(result['result']){
                 this.result = result;
                 console.log(this.result);
+                this.calcularPaginacion();
                 this.verTodos();
             }else{
                 this.empleados = result['result'];
@@ -161,7 +162,7 @@ export class ListaEmpleadosComponent implements OnInit {
     }
 
     public infoEmpleado(id){
-        for (let index = 0; index < this.numRow; index++) {
+        for (let index = 0; index < this.empleados.length; index++) {
             if(this.empleados[index].idempleado==id){
                 this.info_empleado=this.empleados[index];
             }

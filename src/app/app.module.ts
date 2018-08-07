@@ -32,14 +32,15 @@ import { NuevoClienteComponent } from './components/clientes/nuevo-cliente/nuevo
 import { ListaClientesComponent } from './components/clientes/lista-clientes/lista-clientes.component';
 import { ListaEmpresasComponent } from './components/empresas/lista-empresas/lista-empresas.component';
 import { NuevaEmpresaComponent } from './components/empresas/nueva-empresa/nueva-empresa.component';
-import { EncuestasRealizadasComponent } from './components/encuestas/encuestas-realizadas/encuestas-realizadas.component';
-import { EncuestasPendientesComponent } from './components/encuestas/encuestas-pendientes/encuestas-pendientes.component';
+// import { EncuestasRealizadasComponent } from './components/encuestas/encuestas-realizadas/encuestas-realizadas.component';
+// import { EncuestasPendientesComponent } from './components/encuestas/encuestas-pendientes/encuestas-pendientes.component';
 import { LoginComponent } from './components/login/login.component';
 import { SucursalEmpresasComponent } from './components/sucursales/sucursal-empresas/sucursal-empresas.component';
-import { NuevaRutaComponent } from './components/rutas/nueva-ruta/nueva-ruta.component';
-import { ListaRutasComponent } from './components/rutas/lista-rutas/lista-rutas.component';
-import { RutaCobradorComponent } from './components/rutas/ruta-cobrador/ruta-cobrador.component';
 import { HomeComponent } from './components/home/home.component';
+import { ListaZonasComponent } from './components/zonas/lista-zonas/lista-zonas.component';
+import { NuevaZonaComponent } from './components/zonas/nueva-zona/nueva-zona.component';
+import { ListaInvestigacionesComponent } from './components/investigaciones/lista-investigaciones/lista-investigaciones.component';
+import { ListaPendientesComponent } from './components/investigaciones/lista-pendientes/lista-pendientes.component';
 
 // Routes:
 const routes:Routes=[  
@@ -51,8 +52,8 @@ const routes:Routes=[
   {path:'nuevo-empleado',component:NuevoEmpleadoComponent, canActivate:[LoginGuard]},
   {path:'lista-clientes',component:ListaClientesComponent, canActivate:[LoginGuard]},
   {path:'nuevo-cliente',component:NuevoClienteComponent, canActivate:[LoginGuard]},
-  {path:'encuestas-realizadas',component:EncuestasRealizadasComponent, canActivate:[LoginGuard]},
-  {path:'encuestas-pendientes',component:EncuestasPendientesComponent, canActivate:[LoginGuard]},
+  {path:'investigaciones-realizadas',component:ListaInvestigacionesComponent, canActivate:[LoginGuard]},
+  {path:'investigaciones-pendientes',component:ListaPendientesComponent, canActivate:[LoginGuard]},
   {path:'lista-negocios',component:ListaNegociosComponent, canActivate:[LoginGuard]},
   {path:'nuevo-negocio',component:NuevoNegocioComponent, canActivate:[LoginGuard]},
   {path:'giros-negocio',component:GirosNegocioComponent, canActivate:[LoginGuard]},
@@ -65,9 +66,9 @@ const routes:Routes=[
   {path:'pagos-atrasados',component:PagosAtrasadosComponent, canActivate:[LoginGuard]},
   {path:'lista-empresas',component:ListaEmpresasComponent, canActivate:[LoginGuard]},
   {path:'nueva-empresa',component:NuevaEmpresaComponent, canActivate:[LoginGuard]},
-  {path:'lista-rutas', component:ListaRutasComponent,canActivate:[LoginGuard]},
-  {path:'nueva-ruta', component:NuevaRutaComponent, canActivate:[LoginGuard]},
-  {path:'ruta-cobrador', component:RutaCobradorComponent, canActivate:[LoginGuard]}
+  {path:'lista-zonas', component:ListaZonasComponent,canActivate:[LoginGuard]},
+  {path:'nueva-zona', component:NuevaZonaComponent, canActivate:[LoginGuard]},
+  // {path:'ruta-cobrador', component:RutaCobradorComponent, canActivate:[LoginGuard]}
 ];
 
 @NgModule({
@@ -92,14 +93,18 @@ const routes:Routes=[
     ListaEmpresasComponent,
     NuevaEmpresaComponent,
     ListaCobrosComponent,
-    EncuestasRealizadasComponent,
-    EncuestasPendientesComponent,
+    // EncuestasRealizadasComponent,
+    // EncuestasPendientesComponent,
     LoginComponent,
     SucursalEmpresasComponent,
-    NuevaRutaComponent,
-    ListaRutasComponent,
-    RutaCobradorComponent,
-    HomeComponent
+    // NuevaRutaComponent,
+    // ListaRutasComponent,
+    // RutaCobradorComponent,
+    HomeComponent,
+    ListaZonasComponent,
+    NuevaZonaComponent,
+    ListaInvestigacionesComponent,
+    ListaPendientesComponent
   ],
   imports: [
     BrowserModule,

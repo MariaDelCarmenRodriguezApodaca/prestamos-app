@@ -65,9 +65,9 @@
             </a>
             <!-- Esto esta adentro de rutas -->
                 <ul class="sub">
-                  <li><a class="" [routerLink]="['/lista-rutas']" [routerLinkActive]="['linkActivado']">Lista de Zonas</a></li>
-                  <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/nueva-ruta']" [routerLinkActive]="['linkActivado']">Registro de Zonas</a></li>
-                  <li><a class="" [routerLink]="['/ruta-cobrador']" [routerLinkActive]="['linkActivado']">Asignacion de Zonas</a></li>
+                  <li><a class="" [routerLink]="['/lista-zonas']" [routerLinkActive]="['linkActivado']">Lista de Zonas</a></li>
+                  <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/nueva-zona']" [routerLinkActive]="['linkActivado']">Registro de Zonas</a></li>
+                  <!-- <li><a class="" [routerLink]="['/ruta-cobrador']" [routerLinkActive]="['linkActivado']">Asignacion de Zonas</a></li> -->
                 </ul>
         </li>
  
@@ -93,20 +93,19 @@
                 <ul class="sub">
                   <li><a class="" [routerLink]="['/lista-negocios']" [routerLinkActive]="['linkActivado']">Lista de negocios</a></li>
                   <li><a class="" [routerLink]="['/nuevo-negocio']" [routerLinkActive]="['linkActivado']">Registro de negocios</a></li>
-                  <li ><a class="" *ngIf="empleado_log.puesto=='Administrador'" [routerLink]="['/giros-negocio']" [routerLinkActive]="['linkActivado']">Giro de negocios</a></li>
+                  <!-- <li ><a class="" *ngIf="empleado_log.puesto=='Administrador'" [routerLink]="['/giros-negocio']" [routerLinkActive]="['linkActivado']">Giro de negocios</a></li> -->
                 </ul>
         </li>
         
         <li class="sub-menu" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador' || empleado_log.puesto=='Capturista'" >
           <a href="javascript:;" class="">
               <i class="fa fa-users"></i>
-              <span>Encuestas</span>
+              <span>Investigaciones</span> <br> &nbsp; &nbsp; &nbsp; &nbsp; <span>crediticias</span>
               <span class="menu-arrow arrow_carrot-right"></span>
           </a>
-          <!-- Esto esta adentro de encuestas -->
               <ul class="sub">
-                <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/encuestas-realizadas']" [routerLinkActive]="['linkActivado']">Encuestas realizadas</a></li>
-                <li><a class=""  *ngIf="empleado_log.puesto=='Capturista' || empleado_log.puesto=='Administrador'" [routerLink]="['/encuestas-pendientes']" [routerLinkActive]="['linkActivado']">Encuestas pendientes</a></li>
+                <li><a class="" *ngIf="empleado_log.puesto=='Gerente' || empleado_log.puesto=='Administrador'" [routerLink]="['/investigaciones-realizadas']" [routerLinkActive]="['linkActivado']">Encuestas realizadas</a></li>
+                <li><a class=""  *ngIf="empleado_log.puesto=='Capturista' || empleado_log.puesto=='Administrador'" [routerLink]="['/investigaciones-pendientes']" [routerLinkActive]="['linkActivado']">Encuestas pendientes</a></li>
               </ul>
         </li>
         

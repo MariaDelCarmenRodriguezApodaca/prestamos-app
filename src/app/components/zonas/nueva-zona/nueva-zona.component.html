@@ -1,0 +1,55 @@
+
+<!-- titulo -->
+<div class="row">
+  <div class="col-lg-12">
+      <h3 class="page-header"><i class="fa fa-building-o"></i>Añadir Nueva Zona</h3>
+  </div>
+</div>
+<!-- Contenido  --> 
+<div class="row">
+  <div class="col-lg-12">
+  <form #zonasForm="ngForm"  (ngSubmit)="addZona();limpiarForm(zonasForm)" role="form">
+      <br>
+      <label>
+          Nombre: 
+          <span class="label label-danger" *ngIf="!nombre.valid && nombre.touched">El nombre no es valido</span> 
+      </label>
+      <input type="text" #nombre="ngModel" [(ngModel)]="nuevaZona.nombre" class="form-control" name="nombre" required>
+
+      <label>
+          Colonia: 
+          <span class="label label-danger" *ngIf="!callenum.valid && callenum.touched">Las colonias no son validas</span> 
+      </label>
+      <input type="text" #callenum="ngModel" [(ngModel)]="nuevaZona.colonia" class="form-control" name="callenum" required>
+      
+      <label>
+          sucursal: 
+          <span class="label label-danger" *ngIf="!idsucursal.valid && idsucursal.touched">La sucursal no es valido</span> 
+      </label>
+      <select name="idsucursal" #idsucursal="ngModel" [(ngModel)]="nuevaZona.idsucursal" class="form-control m-bot15 " required>
+              <option value="{{sucursal.idsucursal}}" *ngFor="let sucursal of sucursales">{{sucursal.nombre}}</option>
+      </select>
+
+      <label>
+          cobrador: 
+          <span class="label label-danger" *ngIf="!idempleado.valid && idempleado.touched">El cobrador no es valido</span> 
+      </label>
+      <select name="idempleado" #idempleado="ngModel" [(ngModel)]="nuevaZona.idempleado" class="form-control m-bot15 " required>
+          <option value="{{empleado.idempleado}}" *ngFor="let empleado of empleados">{{empleado.nombres}} {{empleado.app_pat}} {{empleado.app_mat}}</option>
+      </select>
+
+      <label>
+          Status:
+          <span class="label label-danger" *ngIf="!status.valid && status.touched">El status no es valido</span> 
+      </label>
+      <select name="status" #status="ngModel" [(ngModel)]="nuevaZona.status" class="form-control m-bot15 " required>
+              <option value="Activa">Activa</option>
+              <option value="Inactiva">Inactiva</option>
+      </select>
+          <!-- boton guardar -->
+      <input  type="submit" value="Guardar cambios" [disabled]="!zonasForm.form.valid" class="btn btn-success" name="guardar" title="guardar cambios" >
+      <button class="btn btn-primary" style="margin-left: 3px" (click)="limpiarForm(zonasForm)">Limpiar Formulario</button>
+  </form>
+
+</div>
+</div>        

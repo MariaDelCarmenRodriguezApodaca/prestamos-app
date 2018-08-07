@@ -1,0 +1,131 @@
+
+<!-- titulo -->
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa-car"></i>{{titulo}}</h3>
+    </div>
+  </div>
+  <!-- Contenido  -->
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="row" *ngIf="zonas">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        Lista de rutas
+                    </header>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Colonia</th>
+                                    <th>sucursal</th>
+                                    <th>Empleado</th>
+                                    <th>Status</th>
+                                    <!-- <th><i class="fa fa-building"></i> IdEmpresa</th> -->
+                                    <th><i class="fa fa-pencil"></i>Editar</th>
+                                </tr>
+                                <tr *ngFor="let zona of zonasDetalles"> 
+                                    <td> {{zona.zona_nombre}}</td>
+                                    <td> {{zona.zona_colonia}}</td>
+                                    <td> {{zona.sucursal_nombre}}</td>
+                                    <td> {{zona.empleado_nombres}} {{zona.empleado_app_pat}}</td>
+                                    <td> {{zona.zona_status}}</td>
+                                    <td>
+                                        <a class="btn btn-primary" data-toggle="modal" data-target="#editarZona" (click)="mostrarZona(zona.zona_idzona)"><i class="fa fa-pencil"></i></a>
+                                    </td>
+                                </tr>                                
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div> 
+        </div>
+        <!-- pagination -->
+        <div class="text-center" *ngIf="zonas">
+            <ul class="pagination">
+                <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+                <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+                <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+            </ul>
+            <div class="text-center">
+                <span class="badge bg-success">{{pag}}</span>
+            </div>
+        </div>
+        <!-- end pagination -->
+            <!-- mensaje cargando giros -->
+            <div  *ngIf="!zonas">
+                <span>Cargando sucursales...</span>
+            </div>
+            <!-- fin de mensaje -->
+    </div>  
+  </div>   
+  <!--main content end-->
+
+
+
+  
+  <!-- inicio del modal para editar zona -->
+  <!-- Inicio del modal -->
+  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editarZona" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                  <h4 class="modal-title">Editar ruta</h4>
+              </div>
+              <div class="modal-body">
+  <!-- Inicio del formulario -->
+                  <form #zonasForm="ngForm"  (ngSubmit)="guardarCambios();limpiarForm(zonasForm)" role="form">
+                      <b>Id de la zona: </b><label for=""> {{editarZona.idzona}}</label><br>
+                      <label>
+                          Nombre: 
+                          <span class="label label-danger" *ngIf="!nombre.valid && nombre.touched">El nombre no es valido</span> 
+                      </label>
+                      <input type="text" #nombre="ngModel" [(ngModel)]="editarZona.nombre" class="form-control" name="nombre" required>
+          
+                      <label>
+                          Colonias: 
+                          <span class="label label-danger" *ngIf="!callenum.valid && callenum.touched">Las colonias no son validas</span> 
+                      </label>
+                      <input type="text" #callenum="ngModel" [(ngModel)]="editarZona.colonia" class="form-control" name="callenum" required>
+                      
+                      <label>
+                              Sucursal: 
+                          <span class="label label-danger" *ngIf="!idsucursal.valid && idsucursal.touched">El Id sucursal no es valido</span> 
+                      </label>
+                      <!-- <input type="text" #idsucursal="ngModel" [(ngModel)]="editarZona.idsucursal" class="form-control" name="idsucursal" required> -->
+                      <select #idsucursal="ngModel" [(ngModel)]="editarZona.idsucursal" class="form-control m-bot15 " name="idsucursal" required>
+                          <div *ngFor="let sucursal of sucursales"><option value="{{editarZona.idsucursal}}"  *ngIf="sucursal.idsucursal == editarZona.idsucursal">{{sucursal.nombre}}</option></div>
+                          <option value="{{sucursal.idsucursal}}" *ngFor="let sucursal of sucursales">{{sucursal.nombre}}</option>
+                      </select>
+                      <label>
+                          Cobrador: 
+                      <span class="label label-danger" *ngIf="!idempleado.valid && idempleado.touched">El cobrador no es valido</span> 
+                      </label>
+                      <!-- <input type="text" #idsucursal="ngModel" [(ngModel)]="editarZona.idsucursal" class="form-control" name="idsucursal" required> -->
+                      <select #idempleado="ngModel" [(ngModel)]="editarZona.idempleado" class="form-control m-bot15 " name="idempleado" required>
+                          <div *ngFor="let empleado of empleados"><option value="{{editarZona.idempleado}}"  *ngIf="empleado.idempleado == editarZona.idempleado">{{empleado.nombres}} {{empleado.app_pat}} {{empleado.app_mat}}</option></div>
+                          <option value="{{empleado.idempleado}}" *ngFor="let empleado of empleados">{{empleado.nombres}} {{empleado.app_pat}} {{empleado.app_mat}}</option>
+                      </select>
+                      <label>
+                          Status:
+                          <span class="label label-danger" *ngIf="!status.valid && status.touched">El status no es valido</span> 
+                      </label>
+                      <select name="status" #status="ngModel" [(ngModel)]="editarZona.status" class="form-control m-bot15 " required>
+                              <option value="editarZona.status">{{editarZona.status}}</option>
+                              <option value="Activa">Activa</option>
+                              <option value="Inactiva">Inactiva</option>
+                      </select>
+                      
+                          <!-- boton guardar -->
+                      <input  type="submit" value="Guardar cambios" [disabled]="!zonasForm.form.valid" class="btn btn-success" name="guardar" title="guardar cambios" >
+                      <button class="btn btn-primary" style="margin-left: 3px" (click)="limpiarForm(zonasForm)">Limpiar Formulario</button>
+                  </form>
+  <!-- Fin del formulario -->
+              </div>
+          </div>
+      </div>
+  </div>
+<!-- Fin del modal para editar sucursar -->

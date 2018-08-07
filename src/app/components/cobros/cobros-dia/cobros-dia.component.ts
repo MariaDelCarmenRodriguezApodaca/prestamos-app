@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CobroDia} from '../../../models/cobro-dia';
 import {CobrosService} from '../../../services/cobros.service';
+import { ToastrModule, ToastrService } from '../../../../../node_modules/ngx-toastr';
 
 @Component({
   selector: 'app-cobros-dia',
@@ -9,24 +10,32 @@ import {CobrosService} from '../../../services/cobros.service';
   providers:[CobrosService]
 })
 export class CobrosDiaComponent implements OnInit {
-  public titulo:string;
+    
+    public titulo:string;
+
     public result:any;
     public cobros_xdia:Array<CobroDia>;
 
-
+    //para paginacion
     public pag:number; //numero de la pagina en que se encuentra
     public numRow:number;//numero de rows
     public numPag:number; //numero de paginas
     public arrayPag:Array<number>; //array que guardara el numero de paginas
     
-
+    // Para selecionar cobro
     public cobroSeleccionado:CobroDia;
     public pagarCobroSeleccionado:CobroDia;
 
+    // Para formulario de pago
     public pagoCompleto;
+    public tipo_pago:string;
+    public input_adelanto:string;
     public comentario:string;
+    
+
     constructor(
-        private _cobrosService:CobrosService
+        private _cobrosService:CobrosService,
+        private toastr:ToastrService
     ){
         this.titulo = 'Cobros correspondientes al dia';
         this.arrayPag=[];
@@ -45,14 +54,11 @@ export class CobrosDiaComponent implements OnInit {
             result =>{
                 if(result['result']){
                     this.result = result;
-                    console.log('---> result:',result);
                     this.pagoCompleto = result['completo'];
-                    console.log('Pago completo ------->',this.pagoCompleto);
-                    this.calcularPaginacion();
-                    
                     this.cobroSeleccionado= new CobroDia(0,'','','','',0,'','','','','','',0,0,'','',0,0,0,0,0,'',0,'');
                     this.pagarCobroSeleccionado = new CobroDia(0,'','','','',0,'','','','','','',0,0,'','',0,0,0,0,0,'',0,'');
                     this.comentario='';
+                    this.calcularPaginacion();
                 }else{
                     console.log('ERROR!! ---> result:',result);
                 }
@@ -65,37 +71,55 @@ export class CobrosDiaComponent implements OnInit {
         this.pagarCobroSeleccionado = cobro;
     }
 
-    public pagarRequerido(){
-        this._cobrosService.pagoRequerido(this.pagarCobroSeleccionado,this.comentario).subscribe(
-            result=>{
-                if(result){
-                    console.log('Pagado con exito', result)
-                    this.obtenerCobrosXDia();
-                    
-                    this.cobroSeleccionado= new CobroDia(0,'','','','',0,'','','','','','',0,0,'','',0,0,0,0,0,'',0,'');
-                    this.pagarCobroSeleccionado = new CobroDia(0,'','','','',0,'','','','','','',0,0,'','',0,0,0,0,0,'',0,'');
-                    this.comentario='';
-                }else{
-                    console.log('Error al pagar', result)
-                }
-            }
-        )
+
+    public pagar(){
+        switch (this.tipo_pago) {
+            case 'requerido':  
+                this.toastr.info('Realizando pago requerido de: ' + this.cobroSeleccionado.cobro_cantidad_cobro);
+                this._cobrosService.pagoRequerido(this.pagarCobroSeleccionado,this.comentario).subscribe(
+                    result=>{
+                        if(result){
+                            this.toastr.success("Pago requerido realizado",'Exito');
+                            this.obtenerCobrosXDia();
+                        }else{
+                            console.log('Error al pagar', result);
+                            this.toastr.error("Error en pago requerido",'Error');
+                        }
+                    }
+                );
+                break;
+            case 'completo':
+                this.toastr.info('Realizando pago completo de: ' + this.pagoCompleto);
+                this._cobrosService.pagoCompleto(this.pagarCobroSeleccionado,this.comentario).subscribe(
+                    result=>{
+                        if(result){
+                            this.toastr.success("Pago completo realizado",'Exito');
+                            this.obtenerCobrosXDia();
+                        }else{
+                            console.log('Error al pagar', result);
+                            this.toastr.error("Error en pago completo",'Error');
+                        }
+                    }
+                );
+                break;
+            case 'adelanto':
+                this.toastr.info('Realizando pago exaxto de: ' + this.input_adelanto );
+                this._cobrosService.pagoExacto(this.pagarCobroSeleccionado,this.comentario,this.input_adelanto).subscribe(
+                    result=>{
+                        if(result){
+                            this.toastr.success("Pago exacto realizado",'Exito');
+                            this.obtenerCobrosXDia();
+                        }else{
+                            console.log('Error al pagar', result);
+                            this.toastr.error("Error en pago adelantado",'Error');
+                        }
+                    }
+                )
+                break;
+        }
     }
-    public pagarCompleto(){
-        this._cobrosService.pagoCompleto(this.pagarCobroSeleccionado,this.comentario).subscribe(
-            result=>{
-                if(result){
-                    console.log('Pagado con exito', result);
-                    this.obtenerCobrosXDia();
-                }else{
-                    console.log('Error al pagar', result)
-                }
-            }
-        )
-    }
-
-
-
+    
+    
     // ---------------------------------PAGINATION
     // CALCULAR PAGINACION
     public calcularPaginacion(){
@@ -136,4 +160,5 @@ export class CobrosDiaComponent implements OnInit {
         console.log(this.cobros_xdia);
     }
 
+    
 }

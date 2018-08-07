@@ -1,153 +1,188 @@
 
 <!-- titulo -->
 <div class="row">
-  <div class="col-lg-12">
-      <h3 class="page-header"><i class="fa fa-dollar"></i> {{titulo}}</h3>
-  </div>
+<div class="col-lg-12">
+    <h3 class="page-header"><i class="fa fa-dollar"></i> {{titulo}}</h3>
 </div>
+</div>
+
 <!-- Contenido  -->
 <div class="row">
-  <div class="col-lg-12">
-      <div class="row" *ngIf="cobros_xdia">
-          <div class="col-lg-12">
-              <section class="panel">
-              <header class="panel-heading">
-                  Lista de Cobros Diarios
-              </header>
-              <div class="table-responsive">
-              <table class="table">
-              <tbody>
-              <tr>
-                  <th><i class="fa fa-user"></i>  Nombre</th>
-                  <th><i class="fa fa-home"></i>  Dirección</th>
-                  <th><i class="fa fa-building"></i>  Tipo de Negocio</th>
-                  <th><i class="fa fa-briefcase"></i>  Nombre del Negocio</th>
-                  <th><i class="fa fa-money"></i>  Cantidad a Cobrar</th>
-                  <th><i class="fa fa-info"></i> Opciones</th>
+<div class="col-lg-12">
+    <div class="row" *ngIf="cobros_xdia">
+        <div class="col-lg-12">
+            <section class="panel">
+            <header class="panel-heading">
+                Lista de Cobros Diarios
+            </header>
+            <div class="table-responsive">
+            <table class="table">
+            <tbody>
+            <tr>
+                <th><i class="fa fa-user"></i>  Nombre</th>
+                <th><i class="fa fa-home"></i>  Dirección</th>
+                <th><i class="fa fa-building"></i>  Tipo de Negocio</th>
+                <th><i class="fa fa-briefcase"></i>  Nombre del Negocio</th>
+                <th><i class="fa fa-money"></i>  Cantidad a Cobrar</th>
+                <th><i class="fa fa-info"></i> Opciones</th>
 
-              </tr>
-              <tr *ngFor="let cobroXdia of cobros_xdia">
-                      <td><i class=""></i>  {{cobroXdia.cliente_nombres}}<br> {{cobroXdia.cliente_app_pat}} {{cobroXdia.cliente_app_mat}}</td>
-                      <td><i class=""></i>  {{cobroXdia.negocio_callenum}}</td>
-                      <td><i class=""></i>  {{cobroXdia.negocio_tipo_negocio}}</td>
-                      <td><i class=""></i>  {{cobroXdia.negocio_nombre_negocio}}</td>
-                      <td><i class=""></i>  {{cobroXdia.cobro_cantidad_cobro}}</td>
-                      <td>
-                          <div class="btn-group">
-                              <a class="btn btn-primary" data-toggle="modal" data-target="#infoModal" (click)="seleccionarInfoCobroXDia(cobroXdia)"><i class="fa fa-info"></i></a>
-                              <a class="btn btn-success" data-toggle="modal" data-target="#pagarModal" (click)="seleccionarInfoCobroXDia(cobroXdia)"><i class="fa fa-dollar"> Pagar</i></a>
-                          </div>
-                      </td>
-              </tr>
-              
-              </tbody>
-          </table>
-          </div>
-          </section>
-      </div> 
-  </div>  
-  </div>
+            </tr>
+            <tr *ngFor="let cobroXdia of cobros_xdia">
+                    <td><i class=""></i>  {{cobroXdia.cliente_nombres}}<br> {{cobroXdia.cliente_app_pat}} {{cobroXdia.cliente_app_mat}}</td>
+                    <td><i class=""></i>  {{cobroXdia.negocio_callenum}}</td>
+                    <td><i class=""></i>  {{cobroXdia.negocio_tipo_negocio}}</td>
+                    <td><i class=""></i>  {{cobroXdia.negocio_nombre_negocio}}</td>
+                    <td><i class=""></i>  {{cobroXdia.cobro_cantidad_cobro}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" data-toggle="modal" data-target="#infoModal" (click)="seleccionarInfoCobroXDia(cobroXdia)"><i class="fa fa-info"></i></a>
+                            <a class="btn btn-success" data-toggle="modal" data-target="#pagarModal" (click)="seleccionarInfoCobroXDia(cobroXdia)"><i class="fa fa-dollar"></i> Pagar</a>
+                        </div>
+                    </td>
+            </tr>
+            
+            </tbody>
+        </table>
+        </div>
+        </section>
+    </div> 
+</div>  
+</div>
 
-   <!-- pagination -->
+<!-- pagination -->
 <div class="text-center" *ngIf="cobros_xdia">
-      <ul class="pagination">
-          <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
-          <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
-          <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
-      </ul>
-      <div class="text-center">
-          <span class="badge bg-success">{{pag}}</span>
-      </div>
-  <!-- end pagination -->
-      <!-- mensaje cobros_xdia giros -->
-      <div  *ngIf="!cobros_xdia">
-          <span>Cargando Cobros...</span>
-      </div>
-      <!-- fin de mensaje --> 
+    <ul class="pagination">
+        <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+        <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+        <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+    </ul>
+    <div class="text-center">
+        <span class="badge bg-success">{{pag}}</span>
+    </div>
+<!-- end pagination -->
+    <!-- mensaje cobros_xdia giros -->
+    <div  *ngIf="!cobros_xdia">
+        <span>Cargando Cobros...</span>
+    </div>
+    <!-- fin de mensaje --> 
 </div>       
 <!--main content end-->
 
 <!-- Modal INFORMACION -->
 <div class="modal fade" id="infoModal" role="dialog">
-  <div class="modal-dialog">
-  
-      <!-- Modal content-->
-      <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Informacion del Cobro al Cliente</h4>
-          </div>
-              
-              <div class="modal-body">
-                  <!-- Cuerpo del modal -->
-                  <strong>Info Basica</strong><br>
-                  <b>Nombre Completo:</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.cliente_nombres}} {{cobroSeleccionado.cliente_app_pat}} {{cobroSeleccionado.cliente_app_mat}}</label><br>
-                  <b>Direccion:</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.negocio_callenum}} {{cobroSeleccionado.negocio_colonia}} {{cobroSeleccionado.negocio_municipio}} {{cobroSeleccionado.negocio_poblacion}} </label><br>
-                  <b>Tipo de Negocio:</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.negocio_tipo_negocio}}</label><br>
-                  <b>Nombre del Negocio:</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.negocio_nombre_negocio}}</label><br>
-                  <b>Cantidad a Cobrar:</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.cobro_cantidad_cobro}}</label><br>
-                  <br><br>
-                  <b>Prestamo Solicitado:</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.prestamo_monto_solicitado}}</label><br>
-                  <b>Prestamo + Interes:</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.prestamo_monto_conInteres}}</label><br>
-                  <b>Interes</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.prestamo_interes}}</label><br>
-                  <b>Tipo de Prestamo</b>
-                  <label class="margin-left-3">{{cobroSeleccionado.credito_descripcion}}</label><br>
-                  
-              </div>
-              <div class="modal-footer">
-                  <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-              </div>
-      </div>
-  
-  </div>
+<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Informacion del Cobro al Cliente</h4>
+        </div>
+            
+            <div class="modal-body">
+                <!-- Cuerpo del modal -->
+                <strong>Info Basica</strong><br>
+                <b>Nombre Completo:</b>
+                <label class="margin-left-3">{{cobroSeleccionado.cliente_nombres}} {{cobroSeleccionado.cliente_app_pat}} {{cobroSeleccionado.cliente_app_mat}}</label><br>
+                <b>Direccion:</b>
+                <label class="margin-left-3">{{cobroSeleccionado.negocio_callenum}} {{cobroSeleccionado.negocio_colonia}} {{cobroSeleccionado.negocio_municipio}} {{cobroSeleccionado.negocio_poblacion}} </label><br>
+                <b>Tipo de Negocio:</b>
+                <label class="margin-left-3">{{cobroSeleccionado.negocio_tipo_negocio}}</label><br>
+                <b>Nombre del Negocio:</b>
+                <label class="margin-left-3">{{cobroSeleccionado.negocio_nombre_negocio}}</label><br>
+                <b>Cantidad a Cobrar:</b>
+                <label class="margin-left-3">{{cobroSeleccionado.cobro_cantidad_cobro}}</label><br>
+                <br><br>
+                <b>Prestamo Solicitado:</b>
+                <label class="margin-left-3">{{cobroSeleccionado.prestamo_monto_solicitado}}</label><br>
+                <b>Prestamo + Interes:</b>
+                <label class="margin-left-3">{{cobroSeleccionado.prestamo_monto_conInteres}}</label><br>
+                <b>Interes</b>
+                <label class="margin-left-3">{{cobroSeleccionado.prestamo_interes}}</label><br>
+                <b>Tipo de Prestamo</b>
+                <label class="margin-left-3">{{cobroSeleccionado.credito_descripcion}}</label><br>
+                
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            </div>
+    </div>
+
+</div>
 </div>
 
 <!-- Modal PAGAR-->
 <div class="modal fade" id="pagarModal" role="dialog">
-  <div class="modal-dialog">
-      
-      <!-- Modal content-->
-      <div class="modal-content">
-          <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Informacion del Cobro al Cliente</h4>
-          </div>
-              
-              <div class="modal-body">
-                  <!-- Cuerpo del modal -->
-                  <strong>¿Como desea realizar el pago?</strong><br><br>
+<div class="modal-dialog">
+    
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Informacion del Cobro al Cliente</h4>
+        </div>
+            
+            <div class="modal-body">
+                <!-- Cuerpo del modal -->
+                <strong>¿Como desea realizar el pago?</strong><br><br>
 
-                  <div class="dropdown">
-                          <label for=""><b>Pago requerido: </b> {{cobroSeleccionado.cobro_cantidad_cobro.toFixed(2)}}</label> <br>
-                          <label for=""><b>Pago completo: </b>{{pagoCompleto.toFixed(2)}}</label> <br><br>
-                          <label for="comentario">Comentario</label><br>
-                          <textarea name="" id="" cols="50" rows="5" [(ngModel)]="comentario"></textarea><br><br><br>
-                          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            Seleccionar Pago
-                          </button>
-                          <span class="caret"></span>
-                          <ul class="dropdown-menu">
-                              <li><a (click)="pagarRequerido()">  Pago Requerido</a></li>
-                              <li><a (click)="pagarCompleto()" >  Pago Completo</a></li>  
-                          </ul>
-                  </div>     
-                 
-                                       
-                  
-               </div>
-          <div class="modal-footer">
+                <div class="form-group">
                 
-          </div>
-      </div>
-  
-  </div>
+                    <form #pagoForm="ngForm" class="form-group" (ngSubmit)="pagar();">
+
+                        <h4>Informacion del pago: </h4> <br> <br>
+
+                        <label><b>Cliente:</b> {{ cobroSeleccionado.cliente_nombres + ' ' + cobroSeleccionado.cliente_app_pat + ' ' + cobroSeleccionado.cliente_app_pat }}</label> <br>
+                        <label><b>Fecha del cobro:</b> {{cobroSeleccionado.cobro_fecha_cobro}}</label> <br>
+                        <label><b>Cantidad del pago requerido:</b> {{cobroSeleccionado.cobro_cantidad_cobro.toFixed(2)}}</label><br>
+                        <label><b>Cantidad del pago completo</b> {{pagoCompleto.toFixed(2)}}</label> <br>
+                        
+                        <br> 
+
+                        <strong>¿Cómo desea realizar el pago?</strong> <br>
+
+                        <input type="radio" name="tipo_pago" #requerido="ngModel" [(ngModel)]="tipo_pago" value="requerido" required>
+                        <label for="tipo_pago"> &nbsp; Pago requerido</label> <br>
+                        
+                        <input type="radio" name="tipo_pago" #completo="ngModel" [(ngModel)]="tipo_pago" value="completo" required> 
+                        <label for="tipo_pago"> &nbsp; Pago completo</label> <br>
+                        
+                        <input type="radio" name="tipo_pago" #adelanto="ngModel" [(ngModel)]="tipo_pago" value="adelanto" required>
+                        <label for="tipo_pago"> &nbsp; Adelanto especifico</label>
+                        
+                        <br> <br>
+                        
+                        <span *ngIf="tipo_pago" class="label label-success" style="font-size: 14px;"><b>El pago seleccionado es:</b> {{tipo_pago}}</span>
+                        
+                        <br> <br> 
+
+                        <div  class="form-group" *ngIf="tipo_pago == 'adelanto'">
+                            <label>Ingrese la cantidad del adelanto</label>
+                            <span *ngIf="inputAdelanto.touched && !inputAdelanto.valid || input_adelanto < cobroSeleccionado.cobro_cantidad_cobro.toFixed(2) || imput_adelanto > pagoCompleto.toFixed(2)" class="label label-danger"> La cantidad no puede ser menor a {{cobroSeleccionado.cobro_cantidad_cobro.toFixed(2)}} ni mayor a {{pagoCompleto.toFixed(2)}} </span>
+                            <input type="number" #inputAdelanto="ngModel" [(ngModel)]="input_adelanto" name="inputAdelanto" class="form-control" min="{{cobroSeleccionado.cobro_cantidad_cobro.toFixed(2)}}" max="{{pagoCompleto.toFixed(2)}}" placeholder="Min:{{cobroSeleccionado.cobro_cantidad_cobro.toFixed(2)}} Max:{{pagoCompleto.toFixed(2)}}" title="El adelanto no puede ser menor a el pago requerido ni puede ser mayor al pago completo" required>
+                        </div>
+
+                        <br>
+
+                        <label for="comentario">Comentario</label><br>
+                        <textarea name="inputComentario" id="" class="form-control" cols="50" rows="5" #inputComentario="ngModel" [(ngModel)]="comentario" required></textarea><br><br><br>
+                        
+                        <input type="submit" value="Pagar" [disabled]="!pagoForm.form.valid || (tipo_pago=='adelanto' && input_adelanto < cobroSeleccionado.cobro_cantidad_cobro.toFixed(2) )" class="form-control btn btn-success" >
+                    </form>
+
+                    <br> 
+                    
+
+                </div>
+                     
+                                    
+                
+            </div>
+        <div class="modal-footer">
+            
+        </div>
+    </div>
+
+</div>
 </div>  
-   
+

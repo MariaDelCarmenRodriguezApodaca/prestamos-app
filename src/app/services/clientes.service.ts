@@ -31,4 +31,14 @@ export class ClientesService{
         console.log(`Se corrio addcliente()`);
         return this._http.post(this.url+'clientes/nuevo',cliente)
     }
+
+        //metodo para enviar una imagen
+        public uploadImage(files:File, url){
+            console.log(`Se corrio uploadImage()`);
+            var formData:any = new FormData(); //creamos un formulario
+            var name:string = 'image'; //el nombre del campo del formulario
+            formData.append(name,files[0],files[0].name); //le añadimos al formulario el fichero
+            console.log(formData);
+            return this._http.put(url,formData);
+        }
 }

@@ -24,6 +24,8 @@ export class ListaClientesComponent implements OnInit {
 
   public imagenIne:any;
 
+  public filesToUpload:Array<File>;
+
   constructor(
       private _clienteService:ClientesService
   ){
@@ -33,9 +35,11 @@ export class ListaClientesComponent implements OnInit {
       this.pag=1;
       this.arrayPag=[];
       this.clientes = [];
-      this.info_cliente = new Cliente(1,'cargando','cargando','cargando','cargando','','','','','',0,'1.jpg','1.jpg',0,0);
+      this.info_cliente = new Cliente(1,'cargando','cargando','cargando','','1.jpg','1.jpg',0);
 
       this.imagenIne = "";
+
+      this.filesToUpload=[];
   }
   ngOnInit(){
       console.log(this.titulo);
@@ -56,20 +60,71 @@ export class ListaClientesComponent implements OnInit {
       )
   }
 
-  public infoCliente(id){
-      for (let index = 0; index < this.clientes.length; index++) {
-          if(this.clientes[index].idcliente==id){
-              this.info_cliente=this.clientes[index];
-          }
-      }
-      console.log(this.info_cliente);
+  public infoCliente(cliente:Cliente){  
+    this.info_cliente=cliente;
+    console.log(this.info_cliente);
   }
+
+  public urlImageSeleccionada:string;
+  public publi_idImagenSeleccionada:string;
+  public verImagen(imagen:string){
+    var imagendata:Array<any> = imagen.split(',');
+    this.urlImageSeleccionada = imagendata[0];
+    this.publi_idImagenSeleccionada = imagendata[1];
+  }
+
+
+
+
+
+
+//   imagenes
 
   public subirImg(files: FileList){
       console.log(files);
       console.log(this.imagenIne);
   }
 
+  public uploadImageDireccion(){
+    var url = GLOBAL.url + `clientes/uploadImageDireccion/${this.info_cliente.idcliente}`;
+    console.log(url);
+    this._clienteService.uploadImage(this.filesToUpload[0],url).subscribe(
+        result=>{
+            if(result){
+                alert('imagen guardada');
+                console.log(result);
+                this.filesToUpload=[];
+                this.getClientes();
+            }else{
+                alert('Error al subir la imagen');
+                console.log(result);
+            }
+        }
+    );
+  }
+  public uploadImageIne(){
+    console.log(url);
+    var url = GLOBAL.url + `clientes/uploadImageIne/${this.info_cliente.idcliente}`;
+    this._clienteService.uploadImage(this.filesToUpload[0],url).subscribe(
+        result=>{
+            if(result){
+                alert('imagen guardada');
+                console.log(result);
+                this.filesToUpload=[];
+                this.getClientes();
+            }else{
+                alert('Error al subir la imagen');
+                console.log(result);
+            }
+        }
+    );
+  }
+
+  public onSelectImage(fileInput:any){
+    var file=<File>fileInput.target.files;
+    this.filesToUpload[0]=file;
+    console.log(this.filesToUpload);
+  }
 
 
 // ---------------------------------PAGINATION

@@ -1,0 +1,162 @@
+
+
+<!-- titulo -->
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa-building"></i>{{titulo}}</h3>
+    </div>
+  </div>
+  <!-- Contenido  -->
+  <div class="row">
+        <div class="col-lg-12">
+                <div class="row" *ngIf="investigaciones_detalles">
+                        <div class="col-lg-12">
+                            <section class="panel">
+                            <header class="panel-heading">
+                                Lista de empresas
+                            </header>
+                            <div class="table-responsive">
+                            <table class="table">
+                            <tbody>
+                            <tr>
+                                <td><i class="fa fa-user"></i> Cliente</td>
+                                <td><i class="fa fa-phone"></i>Telefonos</td>
+                                <td>Zona</td>
+                                <td><i class="fa fa-eye"></i>Ver</td>
+                            </tr>
+                              <tr *ngFor="let i of investigaciones_detalles">
+                                  <td *ngIf="i.investigacion_horario != null ">{{i.investigacion_nombre_completo}}</td>
+                                  <td *ngIf="i.investigacion_horario != null ">{{i.investigacion_telefonos}}</td>
+                                  <td *ngIf="i.investigacion_horario != null ">{{i.zona_nombre}}</td>
+                                  <div style="margin-top: 13px;" >
+                                      <a *ngIf="i.investigacion_horario != null " class="btn btn-primary" data-toggle="modal" data-target="#ver" (click)="seleccionarInvestigacion(i)" ><i class="fa fa-eye"></i></a>
+                                  </div>
+                              </tr>
+                            
+                            </tbody>
+                        </table>
+                        </div>
+                        </section>
+                    </div> 
+                </div>
+                 <!-- pagination -->
+                <div class="text-center" *ngIf="investigaciones_detalles">
+                    <ul class="pagination">
+                        <!-- <li><a (click)="getGiros(pag-1)"  *ngIf="pag > 1">«</a></li> -->
+                        <li *ngFor="let pag of arrayPag"  (click)="cambiarPagina(pag)"><a>{{pag}}</a></li>
+                        <!-- <li><a (click)="getGiros(pag+1)"  *ngIf="pag < totalPag.length" >»</a></li> -->
+                    </ul>
+                    <div class="text-center">
+                        <span class="badge bg-success">{{pag}}</span>
+                    </div>
+                </div>
+                <!-- end pagination -->
+                    <!-- mensaje cargando giros -->
+                    <div  *ngIf="!investigaciones_detalles">
+                        <span>Cargando Investigaciones...</span>
+                    </div>
+                    <!-- fin de mensaje -->
+            </div>  
+    </div>            
+  
+  
+ 
+<!-- Modal subir imagen  INE-->
+<div class="modal fade" id="ver" role="dialog">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Investigación Crediticia</h4>
+        </div>
+        <div class="modal-body">
+                <b>Fecha investigacion:</b><br>
+                <label>{{verInvestigacion.investigacion_fecha_investigacion}}</label><br>
+
+                <b>Telefonos:</b><br>
+                <label>{{verInvestigacion.investigacion_telefonos}}</label><br>
+
+                <b>Nombre Completo:</b><br>
+                <label>{{verInvestigacion.investigacion_nombre_completo}}</label><br>
+       
+                <b>Fecha de Nacimiento:</b><br>
+                <label>{{verInvestigacion.investigacion_fecha_nacimiento}}</label><br>
+       
+                <b>Edad:</b><br>
+                <label>{{verInvestigacion.investigacion_edad}}</label><br>
+
+                <b>Estado Civil:</b><br>
+                <label>{{verInvestigacion.investigacion_estado_civil}}</label><br>
+
+                <b>Direccion del Hogar:</b><br>
+                <label>{{verInvestigacion.investigacion_direccion_hogar}}</label><br>
+
+                <b>Hogar propio o Rentado:</b><br>
+                <label>{{verInvestigacion.investigacion_hogar_propio_orentado}}</label><br>
+       
+                <b>Numero de dependientes económicos:</b><br>
+                <label>{{verInvestigacion.investigacion_numero_dependientes_economicos}}</label><br>
+
+                <b>Monto del Credito:</b><br>
+                <label>{{verInvestigacion.investigacion_monto_credito}}</label><br>
+       
+                <b>Tipo de Comprobante:</b><br>
+                <label>{{verInvestigacion.investigacion_tipo_comprobante}}</label><br>
+
+                <b>Direccion del Negocio:</b><br>
+                <label>{{verInvestigacion.investigacion_direccion_negocio}}</label><br>
+       
+                <b>Horario:</b><br>
+                <label>{{verInvestigacion.investigacion_horario}}</label><br>
+       
+                <b>Propietario o Empleado:</b><br>
+                <label>{{verInvestigacion.investigacion_propietario_oempleado}}</label><br>
+       
+                <b>Negocio Local o Ambulante:</b><br>
+                <label>{{verInvestigacion.investigacion_local_oambulante}}</label><br>
+          
+                <b>Negocio propio o rentado:</b><br>
+                <label>{{verInvestigacion.investigacion_negocio_propio_orentado}}</label><br>
+          
+                <b>Contrato de arrendamiento:</b><br>
+                <label>{{verInvestigacion.investigacion_contrato_arrendamiento}}</label><br>
+       
+                <b>Nombre del Aval:</b><br>
+                <label>{{verInvestigacion.investigacion_nombre_aval}}</label><br>
+          
+                <b>Tiempo de Conocerse:</b><br>
+                <label>{{verInvestigacion.investigacion_tiempo_conocerse}}</label><br>
+       
+                <b>Telefono del Aval:</b><br>
+                <label>{{verInvestigacion.investigacion_telefono_aval}}</label><br>
+       
+                <b>Nombre del Familiar:</b><br>
+                <label>{{verInvestigacion.investigacion_nombre_familiar}}</label><br>
+          
+                <b>Telefono del Familiar:</b><br>
+                <label>{{verInvestigacion.investigacion_telefono_familiar}}</label><br>
+          
+                <b>Parentezco Familiar:</b><br>
+                <label>{{verInvestigacion.investigacion_parentezco_familiar}}</label><br>
+       
+                <b>Como supo del Negocio:</b><br>
+                <label>{{verInvestigacion.investigacion_como_supo}}</label><br>
+          
+                <b>Nombre de la Zona:</b><br>
+                <label>{{verInvestigacion.zona_nombre}}</label><br>
+       
+                <b>Empleado:</b><br>
+                <label>{{verInvestigacion.empleado_nombres}} {{verInvestigacion.empleado_app_pat}} {{verInvestigacion.empleado_app_mat}}</label><br>
+              
+              </div>
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+    </div>
+    
+    </div>
+</div>
+<!-- Fin del MODAL Imagen -->
+
+  

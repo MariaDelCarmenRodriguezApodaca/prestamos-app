@@ -24,7 +24,7 @@ export class NuevoPrestamoComponent implements OnInit {
   
   // Para llenar select: 
   public clientes:any;
-  public negocios:any;
+  public negocios:Array<any>;
   public tipos:any;
   public negociosCliente:Array<any>;
 
@@ -39,6 +39,7 @@ export class NuevoPrestamoComponent implements OnInit {
       this.nuevosprestamos = new Prestamo(0,0,0,0,0,'',0,0,0,0,0,'','',0,0,0,'');
       this.empleado = GLOBAL.id_user;
       this.sucursal = GLOBAL.id_sucursal;
+      this.negocios =[];
   }
 
   ngOnInit() {
@@ -47,6 +48,7 @@ export class NuevoPrestamoComponent implements OnInit {
   // Ejecutamos metodos para llenar select: 
       this.getClientes();
       this.getTipos();
+      this.getNegocios();
   }  
 
   public addPrestamo(){
@@ -56,6 +58,7 @@ export class NuevoPrestamoComponent implements OnInit {
           result=>{
               if(result['result']){
                   console.log('Prestamo registrado con exito')
+                  alert('Prestamo añadido');
               }else{
                   console.log('Error al registrar prestamo')
                   console.log(result);
@@ -83,19 +86,15 @@ export class NuevoPrestamoComponent implements OnInit {
   }
 
 
-  public seleccionarCliente(cliente){
-      this.negocios =[];
-      this._negociosService.getNegociosCliente(cliente).subscribe(
-          result =>{
-             if(!result['result']){
-                  console.log(result);
-              }else{
-                  this.negocios=result['result'];
-                  console.log(this.negocios);
-                  
-              }
-          }
-      )
+  public seleccionarCliente(){
+    this.negocios=[];
+    console.log('seleccionarcliente();');
+    for(let i=0; i<this.negociosCliente.length; i++){
+    if(this.negociosCliente[i].idcliente == this.nuevosprestamos.idcliente){
+        this.negocios.push(this.negociosCliente[i]);
+        }
+    }
+    console.log(this.negocios);
   }
 
 
@@ -106,11 +105,21 @@ export class NuevoPrestamoComponent implements OnInit {
                   console.log(result);
               }else{
                   this.tipos=result['result'];
-                  console.log(this.negocios);
+                  console.log(this.tipos);
                   
               }
           }
       )
+  }
+  public getNegocios(){
+      this._negociosService.getNegocios().subscribe(result=>{
+          if(result['result']){
+            this.negociosCliente=result['result'];
+            console.log(this.negociosCliente)
+          }else{
+            console.log(result);
+          }
+      })
   }
   // -----------------------------------------------------------------------------------------
 

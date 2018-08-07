@@ -14,7 +14,7 @@
                      Cliente: 
                       <span class="label label-danger" *ngIf="!idCliente.valid && idCliente.touched">El nombre del cliente no es valido</span> 
                   </label>
-                  <select type="text" #idCliente="ngModel" [(ngModel)]="nuevosprestamos.idcliente" (change)="seleccionarCliente($event.target.value)" class="form-control" name="idCliente" required>
+                  <select type="text" #idCliente="ngModel" [(ngModel)]="nuevosprestamos.idcliente" (change)="seleccionarCliente()" class="form-control" name="idCliente" required>
                       <option value="{{cliente.idcliente}}" *ngFor="let cliente of clientes">id: {{cliente.idcliente}}, nombre: {{cliente.nombres}} {{ cliente.app_pat }} {{cliente.app_mat}} </option>
                   </select>
       

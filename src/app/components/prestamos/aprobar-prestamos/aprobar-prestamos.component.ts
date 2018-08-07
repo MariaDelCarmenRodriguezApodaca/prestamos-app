@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PrestamoAprobar} from '../../../models/detallados/prestamo-aprobar'; //importamo el modelo prestamoXaprobar para poder tener un esquema de que tipo sera nuestro arreglo de prestamos
 import {PrestamosService} from '../../../services/prestamos.service'; //importamos el servicio prestamos que creamos para porder ejecutar gPrestamosXAprobar y obtener los prestamos del servidor
 import { Prestamo } from '../../../models/prestamo';
+import { ToastrService } from '../../../../../node_modules/ngx-toastr';
 
 @Component({
   selector: 'app-aprobar-prestamos',
@@ -23,8 +24,11 @@ export class AprobarPrestamosComponent implements OnInit {
     public info_prestamo_detallada:PrestamoAprobar;
     public editar_prestamo:any
 
+    public montoEditado:string;
+    public editarMonto:boolean;
     constructor(
-        private _prestamosService:PrestamosService //delcaramos el servicio en el contructor
+        private _prestamosService:PrestamosService, //delcaramos el servicio en el contructor
+        private toastr:ToastrService
     ){
         this.titulo='Aprobar Prestamo';
         this.pag=1;
@@ -32,6 +36,8 @@ export class AprobarPrestamosComponent implements OnInit {
         this.info_prestamo_detallada= new PrestamoAprobar(0,0,0,0,'',0,0,0,'',0,'','',0,0,0,'','','','','','','',0);
         this.editar_prestamo=  new Prestamo(0,0,0,0,0,'',0,0,0,0,0,'','',0,0,0,'');  
         this.prestamos_detallados=[]
+        this.montoEditado=null;
+        this.editarMonto=false;
     }
     
     ngOnInit(){
@@ -58,12 +64,24 @@ export class AprobarPrestamosComponent implements OnInit {
         this.editar_prestamo=info_prestamo;
     }
 
+    public editMonto(){
+        this.editarMonto=true;
+        this.toastr.success('Monto modificado','Exito');
+    }
+    
+
     public aprobar(prestamo:Prestamo){
+        if(this.editarMonto){
+            prestamo.monto_aprobado=this.montoEditado;
+        }else{
+            prestamo.monto_aprobado=String(prestamo.monto_solicitado);
+        }
         prestamo.status='A';
         this._prestamosService.aprobarRechazar(prestamo).subscribe(
             result=>{
                 if(result){
                     console.log('ok');
+                    this.toastr.success('Prestamo aprobado','Exito');
                     this.getPrestamos();
                 }else{
                     console.log('ERROR', result)
@@ -73,11 +91,13 @@ export class AprobarPrestamosComponent implements OnInit {
         
     }
     public rechazar(prestamo:Prestamo){
+        prestamo.monto_aprobado='0.00';
         prestamo.status='R';
         this._prestamosService.aprobarRechazar(prestamo).subscribe(
             result=>{
                 if(result){
                     console.log('ok');
+                    this.toastr.success('Prestamo rechazado','Exito');
                     this.getPrestamos();
                 }else{
                     console.log('ERROR', result)

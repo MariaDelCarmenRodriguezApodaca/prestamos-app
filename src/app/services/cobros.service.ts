@@ -44,6 +44,12 @@ export class CobrosService{
         console.log('Se corrio pagoCompleto()');
         return this._http.put(this.url+`cobros/pago_completo`,data);
     }
+    public pagoExacto(cobro, comentario,cantidad){
+        var data = {cobro, comentario, cantidad}; 
+        console.log("Los datos que se enviaran seran: ",data); 
+        return this._http.put(this.url+`cobros/pago_exacto`, data); 
+    }
+    
     
 }
  

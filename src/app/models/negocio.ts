@@ -2,15 +2,11 @@ export class Negocio{
     constructor(
         public idnegocio:number,
         public idcliente:number,
-        public nombre_negocio:string,
-        public callenum:string,
-        public colonia:string,
-        public estado:string,
-        public municipio:string,
-        public poblacion:string, 
-        public foto_negocio:string, //direccion en el servidor de la foto del negocio
-        public tipo_negocio:string, //ambulante establecimiento
-        public giro_negocio:number //id del giro del negocio
+        public nombre:string,
+        public descripcion_giro:string, //id del giro del negocio
+        public tipo:string, //ambulante establecimiento
+        public idzona:number, //zona a la que pertenece el negocio
+        public comentarios:string
     ){}
 }
 

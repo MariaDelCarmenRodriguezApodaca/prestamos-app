@@ -1,0 +1,269 @@
+
+<!-- titulo -->
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header"><i class="fa fa-building"></i>{{titulo}}</h3>
+    </div>
+  </div>
+  <!-- Contenido  -->
+  <div class="row">
+        <div class="col-lg-12">
+                <div class="row" *ngIf="investigaciones">
+                        <div class="col-lg-12">
+                            <section class="panel">
+                            <header class="panel-heading">
+                                Lista de empresas
+                            </header>
+                            <div class="table-responsive">
+                            <table class="table">
+                            <tbody>
+                            <tr>
+                                <td><i class="fa fa-user"></i> Cliente</td>
+                                <td><i class="fa fa-phone"></i> Telefonos</td>
+                                <td><i class="fa fa-pencil"></i> Ver</td>
+                            </tr>
+                              <tr *ngFor="let i of investigaciones">
+                                  <td *ngIf="i.horario == null ">{{i.nombre_completo}}</td>
+                                  <td *ngIf="i.horario == null ">{{i.telefonos}}</td>
+                                  <div style="margin-top: 4px;" >
+                                      <a *ngIf="i.horario == null " class="btn btn-primary" data-toggle="modal" data-target="#ver" (click)="seleccionarInvestigacion(i)" ><i class="fa fa-pencil"></i></a>
+                                  </div>
+                              </tr>
+                            
+                            </tbody>
+                        </table>
+                        </div>
+                        </section>
+                    </div> 
+                </div>
+                 
+                    <!-- mensaje cargando giros -->
+                    <div  *ngIf="!investigaciones">
+                        <span>Cargando Investigaciones...</span>
+                    </div>
+                    <!-- fin de mensaje -->
+            </div>  
+    </div>            
+  
+  
+ 
+<!-- Modal investigacion -->
+<div class="modal fade" id="ver" role="dialog">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Investigación Crediticia</h4>
+        </div>
+          <div class="modal-body">
+            <form #investigacionForm="ngForm" (ngSubmit)="guardarInvestigacion();limpiarForm(investigacionForm)" class="" id="investigacionForm">
+                <label>
+                    fecha_investigacion: 
+                    <span class="label label-danger" *ngIf="!fechaInvestigacion.valid && fechaInvestigacion.touched">La fecha no es valida</span> 
+                </label>
+                <input type="text" #fechaInvestigacion="ngModel" [(ngModel)]="investigacionSeleccionada.fecha_investigacion" class="form-control" name="fechaInvestigacion" required>
+  
+                <label>
+                    Zona: 
+                    <span class="label label-danger" *ngIf="!zona.valid && zona.touched">La zona no es valida</span> 
+                </label>
+                <input type="text" #zona="ngModel" [(ngModel)]="investigacionSeleccionada.zona" class="form-control" name="zona" required>
+  
+                <label>
+                    Cobrador de la Zona: 
+                    <span class="label label-danger" *ngIf="!cobradorZona.valid && cobradorZona.touched">El dato no es valido</span> 
+                </label>
+                <input type="text" #cobradorZona="ngModel" [(ngModel)]="investigacionSeleccionada.cobrador_zona" class="form-control" name="cobradorZona" required>
+  
+                <label>
+                    Telefonos: 
+                    <span class="label label-danger" *ngIf="!tel.valid && tel.touched">El telefono no es valido</span> 
+                </label>
+                <input type="text" #tel="ngModel" [(ngModel)]="investigacionSeleccionada.telefonos" class="form-control" name="tel" required>
+  
+                <label>
+                    Cliente: 
+                    <span class="label label-danger" *ngIf="!idCliente.valid && idCliente.touched">El dato no es valido</span> 
+                </label>
+                <input type="text" #idCliente="ngModel" [(ngModel)]="investigacionSeleccionada.idcliente" class="form-control" name="idCliente" required>
+  
+                <label>
+                    Nombre Completo: 
+                    <span class="label label-danger" *ngIf="!nombreCompleto.valid && nombreCompleto.touched">El nombre no es valido</span> 
+                </label>
+                <input type="text" #nombreCompleto="ngModel" [(ngModel)]="investigacionSeleccionada.nombre_completo" class="form-control" name="nombreCompleto" required>
+  
+                <label>
+                    Fecha de Nacimiento: 
+                    <span class="label label-danger" *ngIf="!fechaNacimiento.valid && fechaNacimiento.touched">La fecha no es valida</span> 
+                </label>
+                <input type="text" #fechaNacimiento="ngModel" [(ngModel)]="investigacionSeleccionada.fecha_nacimiento" class="form-control" name="fechaNacimiento" required>
+  
+                <label>
+                    Edad: 
+                    <span class="label label-danger" *ngIf="!edad.valid && edad.touched">La edad no es valida</span> 
+                </label>
+                <input type="text" #edad="ngModel" [(ngModel)]="investigacionSeleccionada.edad" class="form-control" name="edad" required>
+
+                <label>
+                    Estado Civil: 
+                    <span class="label label-danger" *ngIf="!edoCivil.valid && edoCivil.touched">El dato no es valido</span> 
+                </label>
+                <!-- <input type="text" #edoCivil="ngModel" [(ngModel)]="investigacionSeleccionada.estado_civil" class="form-control" name="edoCivil" required> -->
+                <select #edoCivil="ngModel" [(ngModel)]="investigacionSeleccionada.estado_civil" class="form-control" name="edoCivil" required>
+                  <option value="Soltero(a)">Soltero(a)</option>
+                  <option value="Casado(a)">Casado(a)</option>
+                </select>
+                <label>
+                    Direccion del Hogar: 
+                    <span class="label label-danger" *ngIf="!direccionHogar.valid && direccionHogar.touched">La dirección no es valida</span> 
+                </label>
+                <input type="text" #direccionHogar="ngModel" [(ngModel)]="investigacionSeleccionada.direccion_hogar" class="form-control" name="direccionHogar" required>
+  
+                <label>
+                    Hogar Propio o Rentado: 
+                    <span class="label label-danger" *ngIf="!hogarPR.valid && hogarPR.touched">El dato no es valido</span> 
+                </label>
+                <select #hogarPR="ngModel" [(ngModel)]="investigacionSeleccionada.hogar_propio_orentado" class="form-control" name="hogarPR" required>
+                  <option value="Propio">Propio</option>
+                  <option value="Rentado">Rentado</option>
+                </select>
+
+                <label>
+                    Numero de Dependientes Económicos: 
+                    <span class="label label-danger" *ngIf="!dependientes.valid && dependientes.touched">El dato no es valido</span> 
+                </label>
+                <input type="number" #dependientes="ngModel" [(ngModel)]="investigacionSeleccionada.numero_dependientes_economicos" class="form-control" name="dependientes" required>
+  
+                <label>
+                    Monto Credito: 
+                    <span class="label label-danger" *ngIf="!montoCredito.valid && montoCredito.touched">El monto no es valido</span> 
+                </label>
+                <input type="text" #montoCredito="ngModel" [(ngModel)]="investigacionSeleccionada.monto_credito" class="form-control" name="montoCredito" required>
+  
+                <label>
+                    Tipo de Comprobante: 
+                    <span class="label label-danger" *ngIf="!tipoComprobante.valid && tipoComprobante.touched">El tipo de comprobante no es valido</span> 
+                </label>
+                <select #tipoComprobante="ngModel" [(ngModel)]="investigacionSeleccionada.tipo_comprobante" class="form-control" name="tipoComprobante" required>
+                  <option value="Recibo de luz" >Recibo de luz</option>
+                  <option value="Recibo de agua">Recibo de agua</option>
+                  <option value="Recibo de telefono">Recibo de telefono</option>
+                </select>
+
+                <label>
+                    Direccion del Negocio: 
+                    <span class="label label-danger" *ngIf="!direccionNegocio.valid && direccionNegocio.touched">La dirección no es valida</span> 
+                </label>
+                <input type="text" #direccionNegocio="ngModel" [(ngModel)]="investigacionSeleccionada.direccion_negocio" class="form-control" name="direccionNegocio" required>
+  
+                <label>
+                    Horario: 
+                    <span class="label label-danger" *ngIf="!horario.valid && horario.touched">El horario no es valido</span> 
+                </label>
+                <input type="text" #horario="ngModel" [(ngModel)]="investigacionSeleccionada.horario" class="form-control" name="horario" required>
+  
+                <label>
+                    Propietario o Empleado del negocio: 
+                    <span class="label label-danger" *ngIf="!propiEmpleado.valid && propiEmpleado.touched">El dato no es valido</span> 
+                </label>
+                <select #propiEmpleado="ngModel" [(ngModel)]="investigacionSeleccionada.propietario_oempleado" class="form-control" name="propiEmpleado" required>
+                  <option value="Propietario">Propietario</option>
+                  <option value="Empleado">Empleado</option>
+                </select>
+                
+                <label>
+                    Negocio Ambulante o en Establecimiento: 
+                    <span class="label label-danger" *ngIf="!localAmbulante.valid && localAmbulante.touched">El dato no es valido</span> 
+                </label>
+                <select #localAmbulante="ngModel" [(ngModel)]="investigacionSeleccionada.local_oambulante" class="form-control" name="localAmbulante" required>
+                  <option value="Establecimiento" >Establecimiento</option>
+                  <option value="Ambulante">Ambulante</option>
+                </select>
+
+                <div *ngIf="investigacionSeleccionada.local_oambulante == 'Establecimiento'">
+                  <label>
+                      El Establecimiento es  Propio o Rentado: 
+                      <span class="label label-danger" *ngIf="!propioRentado.valid && propioRentado.touched">El dato no es valido</span> 
+                  </label>
+                  <select #propioRentado="ngModel" [(ngModel)]="investigacionSeleccionada.negocio_propio_orentado" class="form-control" name="propioRentado" required>
+                    <option value="Propio">Propio</option>
+                    <option value="Rentado">Rentado</option>
+                  </select>
+                </div>
+
+                <div *ngIf="investigacionSeleccionada.local_oambulante == 'Ambulante'">
+                  <label>
+                      Contrato de Arrendamiento: 
+                      <span class="label label-danger" *ngIf="!contrato.valid && contrato.touched">El dato no es valido</span> 
+                  </label>
+                  <select #contrato="ngModel" [(ngModel)]="investigacionSeleccionada.contrato_arrendamiento" class="form-control" name="contrato" required>
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+
+                <label>
+                    Nombre del Aval: 
+                    <span class="label label-danger" *ngIf="!nombreAval.valid && nombreAval.touched">El nombre no es valido</span> 
+                </label>
+                <input type="text" #nombreAval="ngModel" [(ngModel)]="investigacionSeleccionada.nombre_aval" class="form-control" name="nombreAval" required>
+  
+                <label>
+                    Tiempo de Conocerse: 
+                    <span class="label label-danger" *ngIf="!tiempoC.valid && tiempoC.touched">La fecha no es valida</span> 
+                </label>
+                <input type="text" #tiempoC="ngModel" [(ngModel)]="investigacionSeleccionada.tiempo_conocerse" class="form-control" name="tiempoC" required>
+  
+                <label>
+                    Telefono del Aval: 
+                    <span class="label label-danger" *ngIf="!telAval.valid && telAval.touched">El telefono no es valido</span> 
+                </label>
+                <input type="tel" #telAval="ngModel" [(ngModel)]="investigacionSeleccionada.telefono_aval" class="form-control" name="telAval" (keypress)="validarTelAval()"  placeholder="(xxx)yyy-zzzz" pattern="^\([0-9]{3}\)[0-9]{3}-[0-9]{4}" maxlength="13" minlength="13" required>
+  
+                <label>
+                    Nombre del Familiar: 
+                    <span class="label label-danger" *ngIf="!nomFam.valid && nomFam.touched">El nombre no es valido</span> 
+                </label>
+                <input type="text" #nomFam="ngModel" [(ngModel)]="investigacionSeleccionada.nombre_familiar" class="form-control" name="nomFam" required>
+  
+                <label>
+                    Telefono de Familiar: 
+                    <span class="label label-danger" *ngIf="!telFam.valid && telFam.touched">El telefono no es valido</span> 
+                </label>
+                <input type="tel" #telFam="ngModel" [(ngModel)]="investigacionSeleccionada.telefono_familiar" class="form-control" name="telFam" (keypress)="validarTelFam()"  placeholder="(xxx)yyy-zzzz" pattern="^\([0-9]{3}\)[0-9]{3}-[0-9]{4}" maxlength="13" minlength="13" required>
+  
+                <label>
+                    Parentezco del Familiar: 
+                    <span class="label label-danger" *ngIf="!parentezco.valid && parentezco.touched">El parentezco no es valido</span> 
+                </label>
+                <input type="text" #parentezco="ngModel" [(ngModel)]="investigacionSeleccionada.parentezco_familiar" class="form-control" name="parentezco" required>
+  
+                <label>
+                    Como Supo: 
+                    <span class="label label-danger" *ngIf="!comoSupo.valid && comoSupo.touched">El dato no es valido</span> 
+                </label>
+                <select #comoSupo="ngModel" [(ngModel)]="investigacionSeleccionada.como_supo" class="form-control" name="comoSupo" required>
+                  <option value="Por volanteo">Por Volanteo</option>
+                  <option value="Recomendacón de algúno de nuestros clientes">Recomendacón de algúno de nuestros clientes</option>
+                  <option value="Le brindaron información en la sucursal">Le brindaron información en la sucursal</option>
+                  <option value="Otro">Otro</option>
+                </select>
+                <div *ngIf="investigacionSeleccionada.como_supo == 'Otro'">
+                  <textarea #otroo="ngModel" [(ngModel)]="otro" class="form-control" name="otroo" required cols="30" rows="10"></textarea>
+                </div>
+                <br><br>
+                <input type="submit" value="Registrar" [disabled]="!investigacionForm.form.valid" class="btn btn-success" name="guardar" title="Registrar">
+            </form>
+          </div>
+        <div class="modal-footer">
+         <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        </div>
+    </div>
+    
+    </div>
+</div>
+<!-- Fin del MODAL Imagen -->
+
+  

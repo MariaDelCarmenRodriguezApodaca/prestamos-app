@@ -41,6 +41,9 @@ export class ListaEmpleadosComponent implements OnInit {
     public empresas:Empresa;
     public sucursales:Sucursal;
 
+    // Buscador:
+    public buscador:any;
+
 
     constructor(
         private _empleadosService:EmpleadosService,
@@ -56,19 +59,21 @@ export class ListaEmpleadosComponent implements OnInit {
         this.verTod=true;
         this.empleadosDetalles=[];
         this.verSucursalId='$';
+        this.buscador = '';//<---Buscador
 
     }
     
     ngOnInit(){
         console.log(this.titulo);
-        this.obtenerEmpleados();
+        this.obtenerEmpleadosDetalles();
         // Parra llenar select
         this.ObtenerEmpresas();
         this.ObtenerSucursales();
+        this.obtenerEmpleados();
         
     }
 
-    public obtenerEmpleados(){
+    public obtenerEmpleadosDetalles(){
         // Ejecutar metodo getEmpleados del servicio
         this._empleadosService.getEmpleadoDetalle().subscribe( result=>{
             if(result['result']){
@@ -81,10 +86,15 @@ export class ListaEmpleadosComponent implements OnInit {
             }
             
         })
+        
+    }
+
+    public obtenerEmpleados(){
         this._empleadosService.getEmpleado().subscribe(
             result => {
                 //console.log(result);
                 if(!result['result']){
+                    this.empleados = result['result'];
                     console.log(result);
                 }else{
                     this.empleados = result['result'];
@@ -92,6 +102,7 @@ export class ListaEmpleadosComponent implements OnInit {
             });
     }
 
+   
 
     public actualizarEmpleado(){
         console.log(`Se actualizara:`, this.info_empleado);
@@ -99,67 +110,19 @@ export class ListaEmpleadosComponent implements OnInit {
             res=>{
                 if(res['result']){
                     console.log(`Empleado Actualizado con exito`);
-                    this.obtenerEmpleados();
+                    this.obtenerEmpleadosDetalles();
+                    this.obtenerEmpleados()
                     this.toastr.success('Empleado actualizado','Exito');
                 }else{
                     console.log(`Error al actualizar el empleado: ${res}`);
-                    this.obtenerEmpleados();
+                    this.obtenerEmpleadosDetalles();
                     alert('Error!!! Fallo al intentar actualizar un empleado...');
                 }
             });
         
     }
 
-
-
-
-    public verTodos(){
-        this.verTod=true
-        this.empleadosDetalles = this.result.result;
-        this.calcularPaginacion();
-    }
-    public verAlta(){
-        this.verTod=false;
-        this.empleadosDetalles=[];
-        console.log('--------------->',this.result.result[0].empleado_status);
-        var indice = 0;
-        for(let i=0; i < this.numRow; i++){
-            if(this.result.result[i].empleado_status=='Activo'){
-                console.log(`Empleado de alta: ${this.result.result[i]}`);
-                this.empleadosDetalles[indice]=this.result.result[i];
-                indice ++;
-            }
-        }
-    }
-    public verBaja(){
-        this.verTod=false;
-        this.empleadosDetalles=[];
-        var indice = 0;
-        for(let i=0; i < this.numRow; i++){
-            if(this.result.result[i].empleado_status=='Inactivo'){
-                console.log(`Empleado de baja: ${this.result.result[i]}`);
-                this.empleadosDetalles[indice]=this.result.result[i];
-                indice ++;
-            }
-        }
-    }
-
-    public verXSucursal(){
-        if(this.verSucursalId=='$'){
-            this.verTodos();
-        }else{
-            this.verTod=false;
-            this.empleadosDetalles=[];
-            var indice = 0;
-            for(let i=0; i < this.numRow; i++){
-                if(this.result.result[i].sucursal_idsucursal==this.verSucursalId){
-                    this.empleadosDetalles[indice]=this.result.result[i];
-                    indice ++;
-                }
-            }
-        }
-        
-    }
+ 
 
     public infoEmpleado(id){
         for (let index = 0; index < this.empleados.length; index++) {
@@ -193,6 +156,8 @@ export class ListaEmpleadosComponent implements OnInit {
         console.log(`El arreglo con las paginas es: `,this.arrayPag);
         this.cambiarPagina(this.pag);
     }
+
+
     // CONTROLAR PAGINACION
     public cambiarPagina(pag){
         this.empleadosDetalles=[];
@@ -216,24 +181,13 @@ export class ListaEmpleadosComponent implements OnInit {
         console.log(this.empleadosDetalles);
     }
     
+
+    // Metodos para el formulario
     public limpiarForm(form:NgForm){
         form.reset();
         this.nuevoEmpleado=new Empleado(0,'','','','','','','','','','','',0,0,'','','','',0);
     }
 
-    //Validar (xxx)yyy-zzzz telefonos
-    public validarTel(){
-        var tel = this.info_empleado.telefono;
-            var tamaño = tel.length;
-            if(tamaño == 3){
-                var parent = "("+tel+")";
-                this.info_empleado.telefono = parent;
-            }
-            if(tamaño==8){
-                var guion = tel + "-";
-                this.info_empleado.telefono = guion;
-            }
-    }
     // Para llenar select
     // Para llenar select 
     public ObtenerEmpresas(){
@@ -255,5 +209,76 @@ export class ListaEmpleadosComponent implements OnInit {
         });
     }
 
+    //Validar (xxx)yyy-zzzz telefonos
+    public validarTel(){
+        var tel = this.info_empleado.telefono;
+            var tamaño = tel.length;
+            if(tamaño == 3){
+                var parent = "("+tel+")";
+                this.info_empleado.telefono = parent;
+            }
+            if(tamaño==8){
+                var guion = tel + "-";
+                this.info_empleado.telefono = guion;
+            }
+    }
+
+
+
+    // filtros
+
+    public buscar(){
+        console.log(this.buscador);     
+    }
+
+    public verTodos(){
+        this.verTod=true
+        this.empleadosDetalles = this.result.result;
+        this.calcularPaginacion();
+    }
+
+    public verAlta(){
+        this.verTod=false;
+        this.empleadosDetalles=[];
+        console.log('--------------->',this.result.result[0].empleado_status);
+        var indice = 0;
+        for(let i=0; i < this.numRow; i++){
+            if(this.result.result[i].empleado_status=='Activo'){
+                console.log(`Empleado de alta: ${this.result.result[i]}`);
+                this.empleadosDetalles[indice]=this.result.result[i];
+                indice ++;
+            }
+        }
+    }
+    
+    public verBaja(){
+        this.verTod=false;
+        this.empleadosDetalles=[];
+        var indice = 0;
+        for(let i=0; i < this.numRow; i++){
+            if(this.result.result[i].empleado_status=='Inactivo'){
+                console.log(`Empleado de baja: ${this.result.result[i]}`);
+                this.empleadosDetalles[indice]=this.result.result[i];
+                indice ++;
+            }
+        }
+    }
+
+    public verXSucursal(){
+        if(this.verSucursalId=='$'){
+            this.verTodos();
+        }else{
+            this.verTod=false;
+            this.empleadosDetalles=[];
+            var indice = 0;
+            for(let i=0; i < this.numRow; i++){
+                if(this.result.result[i].sucursal_idsucursal==this.verSucursalId){
+                    this.empleadosDetalles[indice]=this.result.result[i];
+                    indice ++;
+                }
+            }
+        }
+        
+    }
 
 }

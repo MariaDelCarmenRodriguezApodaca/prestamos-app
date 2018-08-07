@@ -74,12 +74,13 @@
                       <label class="margin-left-3">{{infoPrestamo.fecha_solicitud}}</label><br>
                       <b>Monto Solicitado:</b>
                       <label class="margin-left-3">{{infoPrestamo.monto_solicitado}}</label><br>
-                      <b>Monto con Interés:</b>
-                      <label class="margin-left-3">{{infoPrestamo.monto_conInteres}}</label><br>
                       <b>Monto Aprobado</b>
                       <label *ngIf="infoPrestamo.status=='A'" class="margin-left-3">{{infoPrestamo.monto_aprobado}}</label>
                       <label *ngIf="infoPrestamo.status=='R'" class="margin-left-3">El prestamo no fue aprobado</label>
                       <label *ngIf="infoPrestamo.status=='?'" class="margin-left-3">El prestamo aun no es aprobado o rechazado</label>
+                      <br>
+                      <b>Monto con Interés:</b>
+                      <label class="margin-left-3">{{infoPrestamo.monto_conInteres}}</label>
                       <br><br>
                       <!--<strong>Tipo de Credito</strong><br>-->
                       <b>Tipo de Crédito:</b>
@@ -88,8 +89,7 @@
                       <label class="margin-left-3">{{infoPrestamo.status}}</label><br>
                       <b>Fecha de Aprobación:</b>
                       <label class="margin-left-3">{{infoPrestamo.fecha_aprobacion}}</label><br>
-                      <b>Monto de Atraso:</b>
-                      <label class="margin-left-3">{{infoPrestamo.monto_atraso}}</label><br>
+                      
                       <b>Tiempo de Credito:</b>
                       <label class="margin-left-3">{{infoPrestamo.tiempo}}</label><br>
                       <b>Interes:</b>
